@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+
+    <h1>Formulaire unscription d'utilisteur</h1>
+    <form action="store" method="post">
+        <div>
+            <label for="nom">Nom</label>
+            <input type="text" name="nom" id="nom" value="{{user.nom}}">
+        </div>
+        <div>
+            <label for="prenom">Prenom</label>
+            <input type="text" name="prenom" id="prenom" value="{{user.prenom}}">
+        </div>
+        <div>
+            <label for="courriel">Courriel</label>
+            <input type="email" name="courriel" id="courriel" value="{{user.courriel}}">
+        </div>
+        <div>
+            <label for="mot_de_passe">Mot de passe</label>
+            <input type="password" name="mot_de_passe" id="mot_de_passe" value="{{user.mot_de_passe}}">
+        </div>
+ 
+        <div>
+            <label for="Privilege_id">Privilege</label>
+            <select name="Privilege_id" id="Privilege_id">
+                {% for privilege in privileges %}
+                    <option value="{{ privilege.id }}" {% if privilege.id == user.Privilege_id %} selected {% endif %}>{{ privilege.privilege_type }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="Enregistrer">
+        </div>
+
+{% endblock %}

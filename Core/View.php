@@ -50,4 +50,5 @@ class View
 
         echo $twig->render($template, $args);
     }
+
 }

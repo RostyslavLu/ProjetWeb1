@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+
+    <h1>Page user  show {{id}}</h1>
+    <table>
+        <tr>
+            <th>id</th>
+            <th>nom</th>
+            <th>prenom</th>
+            <th>courriel</th>
+
+        </tr>
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.nom }}</td>
+            <td>{{ user.prenom }}</td>
+            <td>{{ user.courriel }}</td>
+
+        </tr>
+    </table>
+
+{% endblock %}

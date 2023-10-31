@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Membres{% endblock %}
+
+{% block body %}
+
+    <h1>Page membre index</h1>
+    <div>
+        {% for user in users %}
+            <p><a href="show/{{ user.id }}">{{ user.nom }}</a> - {{ user.prenom }} </p>
+        {% endfor %}
+    </div>
+
+{% endblock %}
