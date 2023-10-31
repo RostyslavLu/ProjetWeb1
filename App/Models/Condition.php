@@ -9,9 +9,9 @@ use PDO;
  *
  * PHP version 7.0
  */
-class Etudiant extends \Core\Model
+class Condition extends \Core\Model
 {
-    public $table = 'etudiant';
+    public $table = 'Condition';
     public $primaryKey = 'id';
 
     /**
@@ -22,7 +22,7 @@ class Etudiant extends \Core\Model
     public static function getAll()
     {
         $db = static::getDB();
-        $stmt = $db->query('SELECT id, nom, age FROM etudiant');
+        $stmt = $db->query('SELECT id, type FROM enchere_stempee.condition');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

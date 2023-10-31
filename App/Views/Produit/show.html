@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Timbre{% endblock %}
+
+{% block body %}
+
+    <h1>Page user  show {{id}}</h1>
+    <table>
+        <tr>
+            <th>id</th>
+            <th>nom</th>
+            <th>description</th>
+            <th>date creation</th>
+            <th>couleurs</th>
+            <th>pays</th>
+            <th>tirage</th>
+            <th>dimensions</th>
+            <th>certification</th>
+            <th>condition</th>
+        </tr>
+        <tr>
+            <td>{{ produit.id }}</td>
+            <td>{{ produit.nom }}</td>
+            <td>{{ produit.description }}</td>
+            <td>{{ produit.date_creation }}</td>
+            <td>{{ produit.couleurs }}</td>
+            <td>{{ produit.pays }}</td>
+            <td>{{ produit.tirage }}</td>
+            <td>{{ produit.dimensions }}</td>
+            <td>{{ produit.certifie }}</td>
+            <td>{{ produit.Condition_id }}</td>
+
+        </tr>
+    </table>
+    <a href="../delete/{{id}}">Effacer</a>
+{% endblock %}

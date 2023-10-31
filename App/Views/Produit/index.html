@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Membres{% endblock %}
+
+{% block body %}
+
+    <h1>Page produits index</h1>
+    <div>
+        {% for produit in produits %}
+            <p><a href="show/{{ produit.id }}">{{ produit.nom }}</a> - {{ produit.description }} - {{ produit.date_creation }} </p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

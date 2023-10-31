@@ -9,9 +9,9 @@ use PDO;
  *
  * PHP version 7.0
  */
-class User extends \Core\Model
+class Produit extends \Core\Model
 {
-    public $table = 'membre';
+    public $table = 'Produit';
     public $primaryKey = 'id';
 
     /**
@@ -22,7 +22,7 @@ class User extends \Core\Model
     public static function getAll()
     {
         $db = static::getDB();
-        $stmt = $db->query('SELECT id, nom, prenom, courriel FROM membre');
+        $stmt = $db->query('SELECT * FROM Produit');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public static function insert($data) {
@@ -30,7 +30,7 @@ class User extends \Core\Model
         
         $fieldName = implode(', ', array_keys($data));
         $fieldValue = ":".implode(', :', array_keys($data));
-        $stmt = $db->prepare('INSERT INTO Membre ('.$fieldName.') VALUES ('.$fieldValue.')');
+        $stmt = $db->prepare('INSERT INTO Produit ('.$fieldName.') VALUES ('.$fieldValue.')');
 
         foreach($data as $key =>$value){
             $stmt->bindValue(":$key", $value);
@@ -40,7 +40,7 @@ class User extends \Core\Model
     }
     public static function selectId($value, $field ='id') {
         $db = static::getDB();
-        $sql = "SELECT * FROM membre WHERE id = :id";
+        $sql = "SELECT * FROM Produit WHERE id = :id";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(":id", $value);
         $stmt->execute();
@@ -51,23 +51,12 @@ class User extends \Core\Model
             header("location:./404.html");
             exit;
         }
-
-
     }
-    public static function checkUser($value){
+    public static function delete($value){
         $db = static::getDB();
-        $sql = "SELECT * FROM membre WHERE courriel = :courriel";
+        $sql = "DELETE FROM Produit WHERE id = :id";
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(":courriel", $value);
-        
+        $stmt->bindValue(":id", $value);
         $stmt->execute();
-        $count = $stmt->rowCount();
-        if ($count == 1) {
-            return $stmt->fetch();
-        } else {
-            header("location:./404.html");
-            exit;
-        }
     }
-
 }

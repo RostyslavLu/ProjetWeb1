@@ -11,7 +11,7 @@ use PDO;
  */
 class Privilege extends \Core\Model
 {
-    public $table = 'privilege';
+    public $table = 'Privilege';
     public $primaryKey = 'id';
 
     /**
