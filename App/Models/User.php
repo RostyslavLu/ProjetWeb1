@@ -65,7 +65,7 @@ class User extends \Core\Model
         if ($count == 1) {
             return $stmt->fetch();
         } else {
-            header("location:./404.html");
+            header("location: login");
             exit;
         }
     }

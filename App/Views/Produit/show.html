@@ -33,7 +33,14 @@
         </tr>
     </table>
     <a href="../delete/{{id}}">Effacer</a> -->
-
+    <header class="entete-timbre">
+        <div class="timbre-titre">
+            <h2>Lot {{ produit.nom }}</h2>
+            <p>Lot # {{produit.id}} | En cours</p>
+        </div>
+        <a href="{{ url_racine }}produit/index">&#60;&nbsp;retour au catalogue timbres</a>
+    </header>
+    <main>
 
     <section class="timbre-details">
         <article class="timbre-image">
@@ -71,4 +78,5 @@
             </div>
         </article>
     </section>
+    </main>
 {% endblock %}

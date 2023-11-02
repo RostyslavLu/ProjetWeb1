@@ -50,7 +50,6 @@ class User extends \Core\Controller
     }
     public function store()
     {
-        //print_r($_POST);
         if (!empty($_POST)) {
             $options = [
                 'cost' => 12,
@@ -88,6 +87,12 @@ class User extends \Core\Controller
     }
     public function auth()
     {
+        if ($_SERVER["REQUEST_METHOD"]!="POST") {
+            View::renderTemplate('User/login.html', [
+                'url_racine' => $this->url_racine
+            ]);
+            exit();
+        }
 
         if (!empty($_POST)) {
 
@@ -96,11 +101,11 @@ class User extends \Core\Controller
             if (password_verify($_POST['mot_de_passe'], $userDb['mot_de_passe'])) {
                 echo "Le mot de passe est valide !";
                 $_SESSION['user'] = $userDb;
-                header('Location: ../home/index');
+                header('Location: ../index');
                 exit();
             } else {
                 echo "Le mot de passe est invalide.";
             }
-        }
+        } 
     }
 }
