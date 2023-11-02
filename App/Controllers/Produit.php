@@ -20,6 +20,7 @@ class Produit extends \Core\Controller
     public function indexAction()
     {
         $liste = \App\Models\Produit::getAll();
+
         View::renderTemplate('Produit/index.html',  [
             'produits' => $liste,
             'url_racine' => $this->url_racine
@@ -32,9 +33,12 @@ class Produit extends \Core\Controller
         $id = $this->route_params['id'];
         $showId = \App\Models\Produit::selectId($id);
 
+        $images = \App\Models\Images::selectId($showId['id']);
+
         View::renderTemplate('Produit/show.html', [
             'id' => $id,
             'produit' => $showId,
+            'images' => $images,
             'url_racine' => $this->url_racine
         ]);
     }

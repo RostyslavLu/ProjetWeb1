@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <h1>Page user  show {{id}}</h1>
+    <!-- <h1>Page user  show {{id}}</h1>
     <table>
         <tr>
             <th>id</th>
@@ -32,5 +32,43 @@
 
         </tr>
     </table>
-    <a href="../delete/{{id}}">Effacer</a>
+    <a href="../delete/{{id}}">Effacer</a> -->
+
+
+    <section class="timbre-details">
+        <article class="timbre-image">
+            <picture>
+                <img src="{{ url_racine }}assets/img/upload/{{ produit.image_principale }}" alt="timbre">
+            </picture>
+            <div class="timbre-images">
+                {% for image in images %}
+                <img src="{{ url_racine }}assets/img/upload/{{ image.nom_fichier }}" alt="timbre">
+                {% endfor %}
+            </div>
+        </article>
+        <article class="timbre-info">
+            <header>
+                <strong>Offre actuelle</strong>
+                <h2><strong>10.50&nbsp;$</strong></h2>
+                <p><strong>Mise courante&nbsp;</strong>1 offre</p>
+                <div class="timbre-miser">
+                    <label for="mise" hidden>Mise</label>
+                    <input type="text" id="mise" value="11.00">
+                    <button>Miser</button>
+                </div>
+            </header>
+            <div>
+                <p><strong>Description&nbsp;</strong> {{ produit.description }}</p>
+                <p><strong>Type:&nbsp;</strong>Général</p>
+                <p><strong>Condition&nbsp;</strong>Bonne</p>
+                <p><strong>Pays d'origine&nbsp;</strong>{{ produit.pays }}</p>
+                <p><strong>Année de timbre&nbsp;</strong>{{ produit.date_creation }}</p>
+            </div>
+            <div>
+                <p>Début enchère 01.09.2023</p>
+                <p>Fin enchère 01.10.2023</p>
+
+            </div>
+        </article>
+    </section>
 {% endblock %}
