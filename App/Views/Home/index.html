@@ -1,9 +1,36 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Stempee|Enchères{% endblock %}
 
 {% block body %}
 
-    <h1>Welcome</h1>
-
+<header class="entete-hero fadeIn">
+    <img src="{{ url_racine }}assets/img/pexels-brett-jordan-4442561.jpg" alt="image-entete" loading="lazy">
+    <div>
+        <h1>Bienvenue sur Stampee</h1>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis neque debitis error est, fugit ipsam
+            distinctio assumenda libero voluptatem unde. Aperiam molestiae nam saepe ad maiores cum necessitatibus
+            minima odit.</p>
+        <a class="bouton" href="#">Voir toute les enchères</a>
+    </div>
+</header>
+<main>
+<section>
+    <header>
+        <h2>Notre mission</h2>
+    </header>
+    <div class="mission">
+        <img src="{{ url_racine }}assets/img/pexels-pixabay-248993.jpg" alt="image_mission" loading="lazy">
+        <article>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio et nihil voluptates,
+                suscipit fugiat nostrum dolores necessitatibus consequuntur aut perferendis iste ipsum unde
+                quisquam eveniet eaque officiis consectetur veritatis recusandae. Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Quisquam recusandae, asperiores dolores quibusdam incidunt,
+                voluptate deleniti fugiat est delectus et veniam adipisci obcaecati velit nihil, blanditiis ex
+                numquam pariatur? Voluptates.</p>
+            <div><a href="#" class="bouton">Lire plus</a></div>
+        </article>
+    </div>
+</section>
+</main>
 {% endblock %}

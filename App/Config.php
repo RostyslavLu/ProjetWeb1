@@ -39,4 +39,6 @@ class Config
      * @var boolean
      */
     const SHOW_ERRORS = true;
+
+    const URL_RACINE = 'http://localhost/projetWeb1/public/';
 }

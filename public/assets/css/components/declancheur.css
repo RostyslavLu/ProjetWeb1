@@ -1,0 +1,41 @@
+/* declancheur */
+@media (max-width: 1480px) {
+	/* -- placer la case à cocher en haut à droite */
+	body > input[type="checkbox"] {
+		position: sticky;
+		display: block;
+		margin-right: auto;
+		z-index: 5;
+        background-color: var(--main-color-dark);
+	}
+
+	/* -- masquer le menu quand la case n'est pas cochée */
+	body > input:not(:checked)+nav {
+		opacity: 0;
+		pointer-events: none;
+	}
+}
+
+@media (min-width: 1480px) {
+	/* -- masquer la case à cocher */
+	body > input[type="checkbox"] {
+		display: none;
+	}
+}
+.declencheur {
+    appearance: none;
+    padding: var(--space-lg);
+    min-width: 100%;
+}
+
+.declencheur.menu:not(:checked)::before {
+    content: "\2630";
+    font-size: large;
+    color: var(--accent-color-light);
+}
+
+.declencheur.menu:checked::before {
+    content: "\2716";
+    font-size: large;
+    color: var(--accent-color-light);
+}

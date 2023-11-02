@@ -1,0 +1,106 @@
+hr {
+    padding: 0 var(--space-xxl);
+}
+
+select {
+    padding: var(--space-xs);
+    min-width: 200px;
+}
+
+form > * {
+    margin-top: var(--space-lg);
+}
+
+.catalogue {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xl);
+}
+
+.catalogue-header {
+    min-height: 40px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.catalogue-header > article {
+    display: flex;
+    gap: var(--space-xs);
+    padding: var(--space-s);
+}
+
+.catalogue-pages > a, .catalog-categorie > a {
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--accent-color-dark);
+}
+
+.catalogue-pages {
+    justify-content: end;
+}
+
+.catalogue-pages img {
+    max-height: 16px;
+}
+
+.en-bas {
+    display: flex;
+    justify-content: end;
+    padding: var(--space-xl) 0;
+    gap: var(--space-xs);
+}
+
+.catalogue > aside {
+    flex-basis: 20ch;
+    flex-grow: 1;
+    padding: var(--space-xs)
+}
+
+.catalogue [type="radio"] {
+    display: block;
+    padding: var(--space-xxs);
+}
+
+.grille {
+    flex-basis: 80ch;
+    flex-grow: 6;
+}
+
+.prix {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+
+.recherche h4 {
+    margin-top: var(--space-s);
+}
+
+.recherche div {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-xs);
+}
+
+.recherche [type="number"] {
+    padding: var(--space-xs);
+}
+
+.bouton-recherche {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xl);
+}
+
+.bouton-recherche > input {
+    padding: var(--space-s);
+    color: var(--accent-color-light);
+    background-color: var(--secondary-color-medium);
+    font-size: var(--text-btn);
+    font-weight: 700;
+    border: 1px solid var(--secondary-color-dark);
+    border-radius: 5px;
+}

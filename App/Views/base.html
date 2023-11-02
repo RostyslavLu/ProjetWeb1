@@ -1,11 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="des timbres du monde entier, inscrivez-vous dès maintenant pour consulter le catalogue complet et miser">
+    <meta name="keywords" content="timbres, enchère">
+    <meta name="author" content="Rostyslav Luchyshyn">
+    <link rel="stylesheet" href="{{ url_racine }}assets/css/styles.css">
     <title>{% block title %}{% endblock %}</title>
 </head>
+
 <body>
+    <input type="checkbox" class="declencheur menu">
+    <nav id="navigation-principale">
+        <header>
+            <a href="{{ url_racine }}"><img src="{{ url_racine }}assets/img/logo/logo-1-alt.png" alt="logo"
+                    class="logo"></a>
+        </header>
+        <div class="champ_recherche">
+            <label for="rechercher" hidden>Recherche</label>
+            <input type="search" placeholder="rechercher" name="rechercher" id="rechercher">
+        </div>
+        <div class="liens_page">
+            <a href="#">Notre mission</a>
+            <a href="#">Présentation de Lord Stampee</a>
+            <a href="#">Offres en cours</a>
+            <a href="{{ url_racine }}produit/index">Catalogue d'enchères</a>
+            <a href="#">Contactez-nous</a>
+        </div>
+        <div class="utilisateur">
+            <a href="#"><img src="{{ url_racine }}assets/img/logo/cart2.png" alt="panier"></a>
+            <a href="{{ url_racine }}user/login"><img src="{{ url_racine }}assets/img/logo/user.png" alt="utilisateur"></a>
+        </div>
+    </nav>
     {% block body %}
     {% endblock %}
+    <footer>
+        <div class="logo-stampee">
+            <img src="{{ url_racine }}assets/img/logo/logo-1-alt.png" alt="logo">
+        </div>
+        <section>
+            <article class="liens-rapide">
+                <h2 class="footer-categorie-titre">Liens rapides</h2>
+                <div class="block">
+                    <a href="#">Devenir membre</a>
+                    <a href="#">Actualités récentes</a>
+                    <a href="#">Offres en cours</a>
+                    <a href="#">Termes et conditions</a>
+                </div>
+            </article>
+            <article class="social">
+                <h2 class="footer-categorie-titre">Suivez nous sur</h2>
+                <div class="block">
+                    <a href="#"><img src="{{ url_racine }}assets/img/logo/social/facebook_logo.png" alt="icon-facebook"></a>
+                    <a href="#"><img src="{{ url_racine }}assets/img/logo/social/twitter_icon.png" alt="icon-twitter"></a>
+                    <a href="#"><img src="{{ url_racine }}assets/img/logo/social/youtube_logo.png" alt="icon-youtube"></a>
+                    <a href="#"><img src="{{ url_racine }}assets/img/logo/social/instagram_logo.png" alt="icon-instagram"></a>
+                </div>
+            </article>
+            <article class="contact">
+                <h2 class="footer-categorie-titre">Contactez-nous</h2>
+                <div class="block">
+                    <a href="#">Angleterre</a>
+                    <a href="#">Canada</a>
+                    <a href="#">US</a>
+                    <a href="#">Australie</a>
+                </div>
+            </article>
+        </section>
+    </footer>
 </body>
+
 </html>

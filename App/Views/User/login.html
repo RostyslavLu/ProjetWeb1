@@ -1,22 +1,26 @@
 {% extends "base.html" %}
 
-{% block title %}User{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
 
-    <h1>Formulaire unscription d'utilisteur</h1>
-    <form action="auth" method="post">
-        <div>
-            <label for="courriel">Courriel</label>
-            <input type="email" name="courriel" id="courriel">
-        </div>
-        <div>
-            <label for="mot_de_passe">Mot de passe</label>
-            <input type="password" name="mot_de_passe" id="mot_de_passe">
-        </div>
-
-        <div>
-            <input type="submit" value="Login">
-        </div>
+    <section class="connexion">
+        <h1>Bienvenue!</h1>
+        <form action="auth" method="post" class="form_login">
+            <div>
+                <label for="courriel">Courriel</label>
+                <input type="email" name="courriel" id="courriel">
+            </div>
+            <div>
+                <label for="mot_de_passe">Mot de passe</label>
+                <input type="password" name="mot_de_passe" id="mot_de_passe">
+            </div>
+            <div>
+                <input class="bouton" type="submit" value="Se connecter">
+            </div>
+            <div>
+                <span>Nouvel utilisateur? <a href="{{ url_racine }}user/create">Créez un compte ici</a></span>
+            </div>
+    </section>
 
 {% endblock %}

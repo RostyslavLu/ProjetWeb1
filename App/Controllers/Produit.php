@@ -21,7 +21,8 @@ class Produit extends \Core\Controller
     {
         $liste = \App\Models\Produit::getAll();
         View::renderTemplate('Produit/index.html',  [
-            'produits' => $liste
+            'produits' => $liste,
+            'url_racine' => $this->url_racine
         ]);
     }
 
@@ -33,7 +34,8 @@ class Produit extends \Core\Controller
 
         View::renderTemplate('Produit/show.html', [
             'id' => $id,
-            'produit' => $showId
+            'produit' => $showId,
+            'url_racine' => $this->url_racine
         ]);
     }
 
@@ -41,18 +43,39 @@ class Produit extends \Core\Controller
     {
         $liste = \App\Models\Produit::getAll();
         $condition = \App\Models\Condition::getAll();
-
+        
         View::renderTemplate('Produit/create.html', [
-            'conditions' => $condition
+            'conditions' => $condition,
+            'url_racine' => $this->url_racine
         ]);
     }
     public function store()
     {
-        // print_r($_POST);
-        // die();
         if (!empty($_POST)) {
-            $liste = \App\Models\Produit::insert($_POST);
+            
+            $image_principale = $_FILES['image_principale']['name'];
+            $tmp_name = $_FILES['image_principale']['tmp_name'];
+            $_POST['image_principale'] = $image_principale;
 
+            
+            $uploadfile = "assets/img/upload/" . basename($image_principale);
+            move_uploaded_file($tmp_name, $uploadfile);
+
+            $produitId = \App\Models\Produit::insert($_POST);
+            $images = $_FILES['image'];
+            foreach ($images['name'] as $key => $value) {
+                $image = $images['name'][$key];
+                $tmp_name = $images['tmp_name'][$key];
+
+                $destination = "assets/img/upload/" . basename($image);
+                move_uploaded_file($tmp_name, $destination);
+                $data = [
+                    'Produit_id' => $produitId,
+                    'nom_fichier' => $image
+                ];
+                $imageId = \App\Models\Images::insert($data);
+            }
+            
             header('Location: index');
             exit();
         }
@@ -68,7 +91,8 @@ class Produit extends \Core\Controller
         View::renderTemplate('Produit/update.html', [
             'id' => $id,
             'produit' => $produit,
-            'conditions' => $condition
+            'conditions' => $condition,
+            'url_racine' => $this->url_racine
         ]);
     }
     public function delete()

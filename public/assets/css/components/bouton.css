@@ -1,0 +1,34 @@
+.bouton {
+    display: inline-block;
+    background-color: var(--accent-color-medium);
+    color: var(--accent-color-light);
+    font-weight: 700;
+    padding: var(--space-lg);
+    border-radius: 10px;
+    text-decoration: none;
+    border: 1px solid var(--accent-color-dark);
+}
+
+.bouton:hover {
+    background-color: var(--accent-color-light);
+    color: var(--accent-color-medium);
+    transition: background-color 350ms ease-in-out;
+}
+
+.bouton-details {
+    display: inline-block;
+    background-color: var(--secondary-color-dark);
+    color: var(--accent-color-light);
+    font-weight: 700;
+    padding: var(--space-lg);
+    border-radius: 10px;
+    text-decoration: none;
+    border: 1px solid var(--accent-color-dark);
+}
+
+.bouton-details:hover {
+    background-color: var(--accent-color-light);
+    color: var(--secondary-color-dark);
+    border: 1px solid var(--secondary-color-dark);
+    transition: background-color 350ms ease-in-out;
+}

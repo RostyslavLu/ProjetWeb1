@@ -37,6 +37,7 @@ class Produit extends \Core\Model
         }
 
         $stmt->execute();
+        return $db->lastInsertId();
     }
     public static function selectId($value, $field ='id') {
         $db = static::getDB();

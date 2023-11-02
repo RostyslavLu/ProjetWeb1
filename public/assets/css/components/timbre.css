@@ -1,0 +1,124 @@
+.entete-timbre {
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.entete-timbre > a, .timbre-meme-categorie > div > a {
+    text-decoration: none;
+    color: var(--secondary-color-dark);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.entete-timbre > a:hover, .timbre-meme-categorie > div > a:hover {
+    color: var(--main-color-dark);
+}
+
+.timbre-titre > p {
+    margin-top: var(--space-xl);
+}
+
+.timbre-details {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-xxl);
+}
+
+.timbre-info {
+    flex-basis: 30ch;
+    flex-grow: 1;
+}
+
+.timbre-image {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+}
+
+.timbre-image > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    flex-basis: 10ch;
+    flex-grow: 1;
+    justify-items: center;
+    align-items: center;
+}
+
+.timbre-image > picture > img {
+    object-fit: cover;
+    width: 100%;
+    max-height: max-content;
+    border: 1px solid var(--main-color-medium);
+    border-radius: var(--space-s);
+}
+
+.timbre-images > img {
+    max-height: 100px;
+    
+}
+
+.timbre-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+}
+
+.timbre-info > header > * {
+    margin-top: var(--space-lg);
+}
+
+.timbre-info > div > * {
+    margin-top: var(--space-s);
+} 
+
+.timbre-miser > button {
+    color: var(--accent-color-light);
+    background-color: var(--secondary-color-dark);
+}
+
+.timbre-miser > input, .timbre-miser > button {
+    font-size: var(--text-xs);
+    padding: var(--space-xs);
+    border-radius: 5px;
+    border: 1px solid var(--secondary-color-dark);
+}
+
+.timbre-meme-categorie > div {
+    margin-top: var(--space-xl);
+}
+
+/* formulaire ajout d'un timbre*/
+.ajout_timbre {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 600px;
+    gap: var(--space-xxl);
+    margin-top: var(--space-xxl);
+}
+.formulaire-timbre {
+    display: flex;
+    flex-direction: column;  
+    justify-content: center;
+    min-width: 400px;
+    padding: var(--space-lg);
+    border: 2px solid var(--main-color-medium);
+    border-radius: 5px;
+}
+.formulaire-timbre > div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--space-md);
+}
+.formulaire-timbre label {
+    margin-bottom: var(--space-xs);
+}
+
+@media (max-width: 1200px) {
+    .timbre-details {
+        flex-direction: column;
+    }
+}

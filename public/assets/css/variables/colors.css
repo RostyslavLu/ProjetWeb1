@@ -1,0 +1,17 @@
+:root{
+    --main-color-light: rgba(190, 193, 188, 1);
+    --main-color-medium: rgba(131, 142, 131, 1);
+    --main-color-dark: rgba(108, 96, 97, 1);
+    --secondary-color-light: rgb(173, 96, 96);
+    --secondary-color-medium: rgba(160, 61, 61, 1);
+    --secondary-color-dark: rgb(133, 31, 31);
+    --accent-color-light:rgb(255, 255, 255);
+    --accent-color-medium:rgba(69, 74, 89, 1);
+    --accent-color-dark:rgb(0, 0, 0);
+    
+    /*alert-info*/
+    /*alert-success*/
+    /*alert-warning*/
+    /*alert-danger*/
+    /*alert-disabled*/
+}

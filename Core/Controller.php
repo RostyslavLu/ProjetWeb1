@@ -23,9 +23,11 @@ abstract class Controller
      *
      * @return void
      */
+    protected $url_racine = "";
     public function __construct($route_params)
     {
         $this->route_params = $route_params;
+        $this->url_racine = \App\Config::URL_RACINE;
 
     }
 

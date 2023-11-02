@@ -1,0 +1,21 @@
+.mission {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-lg);
+}
+
+.mission > * {
+    flex-basis: 50%;
+    max-width: 50%;
+}
+
+.mission > article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-xxl);
+    gap: var(--space-xl);
+}
+.mission p {
+    line-height: 1.5;
+}

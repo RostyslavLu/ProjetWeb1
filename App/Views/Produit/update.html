@@ -4,55 +4,68 @@
 
 {% block body %}
 
-<h1>Formulaire modification d'un timbre</h1>
-<form action="store" method="post">
-    <div>
-        <label for="nom">Nom</label>
-        <input type="text" name="nom" id="nom" value="{{ produit.nom }}">
-    </div>
-    <div>
-        <label for="description">Description</label>
-        <input type="text" name="description" id="description" value="{{ produit.description }}">
-    </div>
-    <div>
-        <label for="date_creation">Date creation</label>
-        <input type="date" name="date_creation" id="date_creation" value="{{ produit.date_creation }}">
-    </div>
-    <div>
-        <label for="couleurs">Couleurs</label>
-        <input type="text" name="couleurs" id="couleurs" value="{{ produit.couleurs }}">
-    </div>
-    <div>
-        <label for="pays">Pays</label>
-        <input type="text" name="pays" id="pays" value="{{ produit.pays }}">
-    </div>
-    <div>
-        <label for="tirage">Tirage</label>
-        <input type="number" name="tirage" id="tirage" value="{{ produit.tirage }}">
-    </div>
-    <div>
-        <label for="dimensions">Dimensions</label>
-        <input type="text" name="dimensions" id="dimensions" value="{{ produit.dimensions }}">
-    </div>
-    <div>
-        <label for="certifie">Certification</label>
-        <select name="certifie" id="certifie">
-            <option value="1">Oui</option>
-            <option value="0">Non</option>
-        </select>
-    </div>
-    <div>
-        <label for="Condition_id">Condition</label>
-        <select name="Condition_id" id="Condition_id">
+<section class="ajout_timbre">
+    <h1>Formulaire modification d'un timbre</h1>
+    
+        <form action="store" method="post" enctype="multipart/form-data" class="formulaire-timbre">
+            <div>
+                <label for="nom">Nom</label>
+                <input type="text" name="nom" id="nom" value="{{ produit.nom }}">
+            </div>
+            <div>
+                <label for="description">Description</label>
+                <textarea name="description" id="description" cols="30" rows="10">{{ produit.description }}</textarea>
+            </div>
+            <div>
+                <label for="date_creation">Date creation</label>
+                <input type="text" name="date_creation" id="date_creation" placeholder="YYYY" value="{{ produit.date_creation }}">
+            </div>
+            <div>
+                <label for="couleurs">Couleurs</label>
+                <input type="text" name="couleurs" id="couleurs" value="{{ produit.couleurs }}">
+            </div>
+            <div>
+                <label for="image_principale">Image principale</label>
+                <input type="file" name="image_principale" id="image_principale" accept="image/*">
+            </div>
+            <div>
+                <label for="pays">Pays</label>
+                <input type="text" name="pays" id="pays" value="{{ produit.pays }}">
+            </div>
+            <div>
+                <label for="tirage">Tirage</label>
+                <input type="number" name="tirage" id="tirage" value="{{ produit.tirage }}">
+            </div>
+            <div>
+                <label for="dimensions">Dimensions</label>
+                <input type="text" name="dimensions" id="dimensions" value="{{ produit.dimensions }}">
+            </div>
+            <div>
+                <label for="certifie">Certification</label>
+                <select name="certifie" id="certifie">
+                    <option value="1">Oui</option>
+                    <option value="0">Non</option>
+                </select>
+            </div>
+            <div>
+                <label for="Condition_id">Condition</label>
+                <select name="Condition_id" id="Condition_id">
+    
+                    {% for condition in conditions %}
+                        <option value="{{ condition.id }}" {% if condition.id == produit.Condition_id %} selected {% endif %}>{{ condition.type }}</option>
+                    {% endfor %}
+    
+                </select>
+            </div>
+            <div>
+                <label for="image">Images secondaire</label>
+                <input type="file" name="image[]" multiple id="image" accept="image/*">
+            </div>
+            <div>
+                <input class="bouton" type="submit" value="Modifier">
+            </div>
 
-            {% for condition in conditions %}
-                <option value="{{ condition.id }}" {% if condition.id == produit.Condition_id %} selected {% endif %}>{{ condition.type }}</option>
-            {% endfor %}
-
-        </select>
-    </div>
-    <div>
-        <input type="submit" value="Enregistrer">
-    </div>
+        </form>
+</section>
 
 {% endblock %}

@@ -21,7 +21,8 @@ class User extends \Core\Controller
     {
         $liste = \App\Models\User::getAll();
         View::renderTemplate('User/index.html',  [
-            'users' => $liste
+            'users' => $liste,
+            'url_racine' => $this->url_racine
         ]);
     }
 
@@ -33,7 +34,8 @@ class User extends \Core\Controller
 
         View::renderTemplate('User/show.html', [
             'id' => $id,
-            'user' => $showId
+            'user' => $showId,
+            'url_racine' => $this->url_racine
         ]);
     }
 
@@ -42,7 +44,8 @@ class User extends \Core\Controller
         $liste = \App\Models\User::getAll();
         $privilege = \App\Models\Privilege::getAll();
         View::renderTemplate('User/create.html', [
-            'privileges' => $privilege
+            'privileges' => $privilege,
+            'url_racine' => $this->url_racine
         ]);
     }
     public function store()
@@ -72,13 +75,16 @@ class User extends \Core\Controller
         View::renderTemplate('User/update.html', [
             'id' => $id,
             'user' => $user,
-            'privileges' => $privilege
+            'privileges' => $privilege,
+            'url_racine' => $this->url_racine
         ]);
     }
     public function login()
     {
 
-        View::renderTemplate('User/login.html');
+        View::renderTemplate('User/login.html', [
+            'url_racine' => $this->url_racine
+        ]);
     }
     public function auth()
     {

@@ -4,11 +4,197 @@
 
 {% block body %}
 
-    <h1>Page produits index</h1>
-    <div>
-        {% for produit in produits %}
-            <p><a href="show/{{ produit.id }}">{{ produit.nom }}</a> - {{ produit.description }} - {{ produit.date_creation }} </p>
-        {% endfor %}
-    </div>
+    <main>
+        <section>
+            <header class="catalogue-header">
+                <article class="catalog-categorie">
+                    <a href="">en cours</a>
+                    <span>|</span>
+                    <a href="">archive</a>
+                </article>
+                <article class="catalogue-pages">
+                    <a href="#"><img src="{{ url_racine }}assets/img/icon/arrow_previous_icon.png" alt="fleche"></a>
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">6</a>
+                    <a href="#">7</a>
+                    <a href="#">8</a>
+                    <a href="#">9</a>
+                    <a href="#">...</a>
+                    <a href="#">36</a>
+                    <a href="#"><img src="{{ url_racine }}assets/img/icon/arrow_forward_icon.png" alt="fleche"></a>
+                </article>
+            </header>
+            <div class="catalogue">
+                
+                <aside>
+                    <h3>Recherche avancée</h3>
+                    <article class="recherche">
+                        
+                        <form >
+                            <h4>Condition</h4>
+                            <div>
+                                <input type="radio" name="condition" id="parfaite">
+                                <label for="parfaite">Parfaite</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="condition" id="excellente">
+                                <label for="excellente">Excellente</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="condition" id="bonne">
+                                <label for="bonne">Bonne</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="condition" id="moyenne">
+                                <label for="moyenne">Moyenne</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="condition" id="endommage">
+                                <label for="endommage">Endommagé</label>
+                            </div>
+                            <hr>
+                            <h4>Pays d'origine</h4>
+                            <select name="pays">
+                                <option value="1">Tous les pays</option>
+                                <option value="2">Canada</option>
+                                <option value="3">États-Unis</option>
+                                <option value="4">Angleterre</option>
+                                <option value="5">Allemagne</option>
+                                <option value="6">France</option>
+                            </select>
+                            <hr>
+                            <h4>Prix</h4>
+                            <div class="prix">
+                                <input type="number" name="prix-de" id="prix-de">
+                                <label for="prix-de">$</label>
+                            
+                                <input type="number" name="prix-a" id="prix-a">
+                                <label for="prix-a">$</label>
+                            </div>
+                            <hr>
+                            <h4>Type</h4>
+                            <div>
+                                <input type="radio" name="type" id="general">
+                                <label for="general">Général</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="type" id="courrier-aerien">
+                                <label for="courrier-aerien">Courrier Aérien</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="type" id="livret">
+                                <label for="livret">Livret</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="type" id="port-du">
+                                <label for="port-du">Port dû</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="type" id="carte-postal">
+                                <label for="carte-postal">Carte postal</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="type" id="semi-postal">
+                                <label for="semi-postal">Semi postal</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="type" id="entier-postal">
+                                <label for="entier-postal">Entier postal</label>
+                            </div>
+                            <hr>
+                            <h4>Année d'émission</h4>
+                            <div class="anne">
+                                <input type="number" name="anne-de" id="anne-de">
+                                <label for="anne-de" hidden>De</label>
+                                <input type="number" name="anne-a" id="anne-a">
+                                <label for="anne-a" hidden>À</label>
+                            </div>
+                            <hr>
+                            <h4>Dimensions</h4>
+                            <div class="anne">
+                                <input type="number" name="dimensions-de" id="dimensions-de">
+                                <label for="dimensions-de" hidden>De</label>
+                                <input type="number" name="dimensions-a" id="dimensions-a">
+                                <label for="dimensions-a" hidden>À</label>
+                            </div>
+                            <hr>
+                            <h4>Tirage</h4>
+                            <label for="tirage"></label>
+                            <select name="tirage" id="tirage">
+                                <option value="0">select</option>
+                                <option value="1">1 - 50</option>
+                                <option value="2">51 - 500</option>
+                                <option value="3">501 - 10000</option>
+                                <option value="4">10001 - +</option>
+                            </select>
+                            <hr>
+                            <h4>Certification</h4>
+                            <label for="certification"></label>
+                            <select name="certification" id="certification">
+                                <option value="0">select</option>
+                                <option value="1">Oui</option>
+                                <option value="2">Non</option>
+                            </select>
+                            <div class="bouton-recherche">
+                                <input type="button" value="Remettre à zéro">
+                                <input type="button" value="Chercher">
+                            </div>
+                        </form>
+                    </article>
+  
+                </aside>
+                <div class="grille">
+                {% for produit in produits %}
+                    <article class="carte">
+                        <div class="carte-entete">
+                            <p>Lot # {{ produit.id }}</p>
+                            <a href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" data-name="Capa 1" viewBox="0 0 20 19.84">
+                                    <path d="M16.22,5.59a4.13,4.13,0,0,0-3.43-1.78A3.7,3.7,0,0,0,10,5,3.71,3.71,0,0,0,7.21,3.81,4.13,4.13,0,0,0,3.78,5.59,4.22,4.22,0,0,0,3.6,9.77a10.67,10.67,0,0,0,2.09,3.09,23.44,23.44,0,0,0,3.23,2.82,1.84,1.84,0,0,0,2.16,0,23.36,23.36,0,0,0,3.23-2.82A10.67,10.67,0,0,0,16.4,9.77,4.22,4.22,0,0,0,16.22,5.59Zm-.66,3.83a10,10,0,0,1-1.92,2.82,22.72,22.72,0,0,1-3.1,2.7.9.9,0,0,1-1.08,0,22.8,22.8,0,0,1-3.1-2.7A9.75,9.75,0,0,1,4.44,9.42a3.38,3.38,0,0,1,.1-3.33A3.21,3.21,0,0,1,7.21,4.73a2.8,2.8,0,0,1,2.24,1,.81.81,0,0,0,1.12,0,2.8,2.8,0,0,1,2.22-1,3.21,3.21,0,0,1,2.67,1.36A3.38,3.38,0,0,1,15.56,9.42Z"/>
+                                </svg>
+                            </a>
+                        </div>
+                        <picture>
+                            <img src="{{ url_racine }}assets/img/upload/{{ produit.image_principale }}" alt="timbre">
+                        </picture>
+                        <div class="carte-text">
+                            <h3>Lot {{ produit.nom }}</h3>
+                            <div>
+                                <p>Début enchère 01.09.2023</p>
+                                <p>Fin enchère 01.10.2023</p>
+                            </div>
+                            <div>
+                                <p>Mise courante: <strong>1 offre</strong></p>
+                                <p>Mise actuel: <strong>235&nbsp;$</strong></p>
+                            </div>
+                            <div class="controls">
+                                <a class="bouton-details" href="{{ url_racine }}produit/show/{{ produit.id }}">Details</a>
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+            <article class="catalogue-pages en-bas">
+                <a href="#"><img src="{{ url_racine }}assets/img/icon/arrow_previous_icon.png" alt="fleche"></a>
+                <a href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a href="#">8</a>
+                <a href="#">9</a>
+                <a href="#">...</a>
+                <a href="#">36</a>
+                <a href="#"><img src="{{ url_racine }}assets/img/icon/arrow_forward_icon.png" alt="fleche"></a>
+            </article>
+        </section>
+    </main>
 
 {% endblock %}
