@@ -19,6 +19,9 @@ class Home extends \Core\Controller
      */
     public function indexAction()
     {
-        View::renderTemplate('Home/index.html');
+        View::renderTemplate('Home/index.html', [
+            'url_racine' => $this->url_racine,
+            'session' => $_SESSION
+        ]);
     }
 }

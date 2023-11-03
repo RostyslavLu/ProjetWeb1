@@ -3,23 +3,32 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-
-    <h1>Page user  show {{id}}</h1>
-    <table>
-        <tr>
-            <th>id</th>
-            <th>nom</th>
-            <th>prenom</th>
-            <th>courriel</th>
-
-        </tr>
-        <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.nom }}</td>
-            <td>{{ user.prenom }}</td>
-            <td>{{ user.courriel }}</td>
-
-        </tr>
-    </table>
+{% if session.user_id == id %}
+    <section>
+        <h1>Page user  show {{id}}</h1>
+        <table>
+            <tr>
+                <th>id</th>
+                <th>nom</th>
+                <th>prenom</th>
+                <th>courriel</th>
+            </tr>
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.courriel }}</td>
+            </tr>
+        </table>
+    </section>
+    {% else %}
+    <section class="access_denied">
+        <h1>Vous n'avez pas les droits pour accéder à cette page</h1>
+        <picture>
+            <img src="{{ url_racine }}/assets/img/icon/icons8-interdit-80.png" alt="interdit">
+        </picture>
+        <a href="{{ url_racine }}">Retourner à la page d'accueil</a>
+    </section>
+    {% endif %}
 
 {% endblock %}

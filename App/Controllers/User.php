@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
-
+use \Core;
 /**
  * Home controller
  *
@@ -22,7 +22,8 @@ class User extends \Core\Controller
         $liste = \App\Models\User::getAll();
         View::renderTemplate('User/index.html',  [
             'users' => $liste,
-            'url_racine' => $this->url_racine
+            'url_racine' => $this->url_racine,
+            'session' => $_SESSION
         ]);
     }
 
@@ -35,7 +36,8 @@ class User extends \Core\Controller
         View::renderTemplate('User/show.html', [
             'id' => $id,
             'user' => $showId,
-            'url_racine' => $this->url_racine
+            'url_racine' => $this->url_racine,
+            'session' => $_SESSION
         ]);
     }
 
@@ -45,26 +47,58 @@ class User extends \Core\Controller
         $privilege = \App\Models\Privilege::getAll();
         View::renderTemplate('User/create.html', [
             'privileges' => $privilege,
-            'url_racine' => $this->url_racine
+            'url_racine' => $this->url_racine,
+            'session' => $_SESSION
         ]);
     }
+
+    /**
+     * fonction pour enregistrer un utilisateur
+     */
+
     public function store()
     {
-        if (!empty($_POST)) {
+        if ($_SERVER["REQUEST_METHOD"]!="POST") {
+            View::renderTemplate('User/create.html', [
+                'url_racine' => $this->url_racine,
+                'session' => $_SESSION
+            ]);
+            exit();
+        }
+
+        extract($_POST);
+        $validation = new Core\Validation();
+        $validation->name('nom')->value($nom)->pattern('alpha')->min(2)->max(25)->required();
+        $validation->name('prenom')->value($prenom)->pattern('alpha')->min(2)->max(25)->required();
+        $validation->name('courriel')->value($courriel)->pattern('email')->min(10)->max(50)->required();
+        $validation->name('mot_de_passe')->value($mot_de_passe)->pattern('alphanum')->min(8)->max(25)->required();
+        
+        
+        if ($validation->isSuccess()) {
             $options = [
                 'cost' => 12,
             ];
             $passwordHash = password_hash($_POST['mot_de_passe'], PASSWORD_BCRYPT, $options);
             $_POST['mot_de_passe'] = $passwordHash;
-
+            $_POST['Privilege_id'] = 2;
             $liste = \App\Models\User::insert($_POST);
 
-            header('Location: index');
+            header('Location: ../index');
             exit();
+        } else {
+            $errors = $validation->getErrors();
+            View::renderTemplate('User/create.html', [
+                'data' => $_POST,
+                'errors' => $errors,
+                'url_racine' => $this->url_racine,
+                'session' => $_SESSION
+            ]);
         }
-
-        View::renderTemplate('User/create.html');
+        
     }
+    /**
+     * fonction pour mise à jour d'un utilisateur
+     */
     public function update()
     {
 
@@ -75,21 +109,26 @@ class User extends \Core\Controller
             'id' => $id,
             'user' => $user,
             'privileges' => $privilege,
-            'url_racine' => $this->url_racine
+            'url_racine' => $this->url_racine,
+            'session' => $_SESSION
         ]);
     }
+ 
     public function login()
     {
 
         View::renderTemplate('User/login.html', [
-            'url_racine' => $this->url_racine
+            'url_racine' => $this->url_racine,
+            'session' => $_SESSION
         ]);
     }
+
     public function auth()
     {
         if ($_SERVER["REQUEST_METHOD"]!="POST") {
             View::renderTemplate('User/login.html', [
-                'url_racine' => $this->url_racine
+                'url_racine' => $this->url_racine,
+                'session' => $_SESSION
             ]);
             exit();
         }
@@ -97,15 +136,40 @@ class User extends \Core\Controller
         if (!empty($_POST)) {
 
             $userDb = \App\Models\User::checkUser($_POST['courriel']);
+            // ajouter la verification de l'adresse courriel et retourner un message d'erreur si l'adresse n'existe pas
 
             if (password_verify($_POST['mot_de_passe'], $userDb['mot_de_passe'])) {
-                echo "Le mot de passe est valide !";
-                $_SESSION['user'] = $userDb;
-                header('Location: ../index');
+                session_regenerate_id();
+                $_SESSION['user_id'] = $userDb['id'];
+                $_SESSION['user_nom'] = $userDb['nom'];
+                $_SESSION['user_prenom'] = $userDb['prenom'];
+                $_SESSION['privilege'] = $userDb['Privilege_id'];
+                $_SESSION['fingerPrint'] = md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
+
+                header('Location: show/' . $userDb['id']);
                 exit();
             } else {
-                echo "Le mot de passe est invalide.";
+                $error = "Le mot de passe est invalide.";
+                $data = $_POST;
+                View::renderTemplate('User/login.html', [
+                    'data' => $data,
+                    'error' => $error,
+                    'url_racine' => $this->url_racine,
+                    'session' => $_SESSION
+                ]);
+
             }
         } 
+    }
+
+    /**
+     * fonction pour fermer la session d'un utilisateur
+     */
+
+    public function logout()
+    {
+        session_destroy();
+        header('Location: ../index');
+        exit();
     }
 }

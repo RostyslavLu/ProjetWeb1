@@ -4,36 +4,39 @@
 
 {% block body %}
 
-    <section class="inscription">
-        <h1>Formulaire inscription d'utilisteur</h1>
-        <form action="store" method="post" class="form_inscription">
-            <div>
-                <label for="nom">Nom</label>
-                <input type="text" name="nom" id="nom">
-            </div>
-            <div>
-                <label for="prenom">Prenom</label>
-                <input type="text" name="prenom" id="prenom">
-            </div>
-            <div>
-                <label for="courriel">Courriel</label>
-                <input type="email" name="courriel" id="courriel">
-            </div>
-            <div>
-                <label for="mot_de_passe">Mot de passe</label>
-                <input type="password" name="mot_de_passe" id="mot_de_passe">
-            </div>
-            <div>
-                <label for="Privilege_id">Privilege</label>
-                <select name="Privilege_id" id="Privilege_id">
-                    {% for privilege in privileges %}
-                        <option value="{{ privilege.id }}">{{ privilege.privilege_type }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div>
-                <input class="bouton" type="submit" value="Enregistrer">
-            </div>
-    </section>
+<section class="inscription">
+    <h1>Formulaire inscription d'utilisteur</h1>
+
+    <form action="store" method="post" class="form_inscription">
+        {% if errors is defined %}
+        
+        <ol>
+            {% for error in errors %}
+            <li class="error">{{error}}</li>
+            {% endfor %}
+        </ol>
+
+        {% endif %}
+        <div>
+            <label for="nom">Nom</label>
+            <input type="text" name="nom" id="nom" value="{{data.nom}}">
+        </div>
+        <div>
+            <label for="prenom">Prenom</label>
+            <input type="text" name="prenom" id="prenom" value="{{data.prenom}}">
+        </div>
+        <div>
+            <label for="courriel">Courriel</label>
+            <input type="email" name="courriel" id="courriel" value="{{data.courriel}}">
+        </div>
+        <div>
+            <label for="mot_de_passe">Mot de passe</label>
+            <input type="password" name="mot_de_passe" id="mot_de_passe">
+        </div>
+            
+        <div>
+            <input class="bouton" type="submit" value="Enregistrer">
+        </div>
+</section>
 
 {% endblock %}

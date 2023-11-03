@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}User{% endblock %}
+{% block title %}Membre{% endblock %}
 
 {% block body %}
+{% if session.user_id == id %}
+<section class="inscription">
 
-    <h1>Formulaire unscription d'utilisteur</h1>
-    <form action="store" method="post">
+    <h1>Formulaire modification d'utilisteur</h1>
+    <form action="store" method="post" class="form_inscription">
         <div>
             <label for="nom">Nom</label>
             <input type="text" name="nom" id="nom" value="{{user.nom}}">
@@ -22,7 +24,17 @@
             <label for="mot_de_passe">Mot de passe</label>
             <input type="password" name="mot_de_passe" id="mot_de_passe" value="{{user.mot_de_passe}}">
         </div>
- 
+        {% else %}
+        <section class="access_denied">
+            <h1>Vous n'avez pas les droits pour accéder à cette page</h1>
+            <picture>
+                <img src="{{ url_racine }}/assets/img/icon/icons8-interdit-80.png" alt="interdit">
+            </picture>
+            <a href="{{ url_racine }}">Retourner à la page d'accueil</a>
+        </section>
+        {% endif %}
+
+        {% if session.user_privilege == 1 %}
         <div>
             <label for="Privilege_id">Privilege</label>
             <select name="Privilege_id" id="Privilege_id">
@@ -31,8 +43,11 @@
                 {% endfor %}
             </select>
         </div>
+        
         <div>
-            <input type="submit" value="Enregistrer">
+            <input type="submit" value="Modifier">
         </div>
-
+    </form>
+        {% endif %}
+</section>
 {% endblock %}

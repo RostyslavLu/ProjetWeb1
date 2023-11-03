@@ -35,6 +35,7 @@
             <a href="{{ url_racine }}user/login"><img src="{{ url_racine }}assets/img/logo/user.png" alt="utilisateur"></a>
         </div>
     </nav>
+    {% if session.user_nom %}<span class="user_logged">Bienvenue &nbsp;<a href="{{ url_racine }}user/show/{{ session.user_id }}">{{ session.user_nom}}&nbsp;</a> <a href="{{ url_racine }}user/logout">Quitter</a></span>{% endif %}
     {% block body %}
     {% endblock %}
     <footer>

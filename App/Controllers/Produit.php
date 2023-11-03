@@ -23,7 +23,8 @@ class Produit extends \Core\Controller
 
         View::renderTemplate('Produit/index.html',  [
             'produits' => $liste,
-            'url_racine' => $this->url_racine
+            'url_racine' => $this->url_racine,
+            'session' => $_SESSION
         ]);
     }
 
@@ -39,7 +40,8 @@ class Produit extends \Core\Controller
             'id' => $id,
             'produit' => $showId,
             'images' => $images,
-            'url_racine' => $this->url_racine
+            'url_racine' => $this->url_racine,
+            'session' => $_SESSION
         ]);
     }
 
@@ -50,7 +52,8 @@ class Produit extends \Core\Controller
         
         View::renderTemplate('Produit/create.html', [
             'conditions' => $condition,
-            'url_racine' => $this->url_racine
+            'url_racine' => $this->url_racine,
+            'session' => $_SESSION
         ]);
     }
     public function store()
@@ -96,7 +99,8 @@ class Produit extends \Core\Controller
             'id' => $id,
             'produit' => $produit,
             'conditions' => $condition,
-            'url_racine' => $this->url_racine
+            'url_racine' => $this->url_racine,
+            'session' => $_SESSION
         ]);
     }
     public function delete()

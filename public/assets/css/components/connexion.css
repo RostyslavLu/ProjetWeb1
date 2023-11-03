@@ -24,3 +24,11 @@
     margin-top: var(--space-s);
     padding: var(--space-s);
 }
+.access_denied {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 600px;
+    gap: var(--space-xxl);
+}

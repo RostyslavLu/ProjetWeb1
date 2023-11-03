@@ -46,16 +46,20 @@ class User extends \Core\Model
         $stmt->execute();
         $count = $stmt->rowCount();
         if ($count == 1) {
+            
             return $stmt->fetch();
         } else {
             header("location:./404.html");
             exit;
         }
 
-
     }
+    /**
+     * verication est ce que le courriel existe dans la base de donnee
+     */
     public static function checkUser($value){
         $db = static::getDB();
+
         $sql = "SELECT * FROM membre WHERE courriel = :courriel";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(":courriel", $value);
@@ -63,6 +67,7 @@ class User extends \Core\Model
         $stmt->execute();
         $count = $stmt->rowCount();
         if ($count == 1) {
+
             return $stmt->fetch();
         } else {
             header("location: login");

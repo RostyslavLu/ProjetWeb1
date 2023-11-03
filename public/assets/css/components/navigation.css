@@ -58,6 +58,22 @@
 
 .utilisateur img {
     max-height: var(--space-xl);
+    
+}
+
+.user_logged {
+    margin-left: auto;
+    padding: var(--space-s);
+    font-weight: 600;
+}
+
+.user_logged a {
+    text-decoration: none;
+    color: var(--main-color-dark);
+}
+.avertissement{
+    color: var(--secondary-color-dark);
+    font-weight: 600;
 }
 
 @media (max-width: 1600px) {

@@ -1,14 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}Membres{% endblock %}
+{% block title %}Membre{% endblock %}
 
 {% block body %}
-
-    <h1>Page membre index</h1>
+    {% if session.privilege == 1 %}
+    <h1>Liste des membres</h1>
     <div>
         {% for user in users %}
             <p><a href="show/{{ user.id }}">{{ user.nom }}</a> - {{ user.prenom }} </p>
         {% endfor %}
     </div>
-
+    {% else %}
+    <section class="access_denied">
+        <h1>Vous n'avez pas les droits pour accéder à cette page</h1>
+        <picture>
+            <img src="{{ url_racine }}/assets/img/icon/icons8-interdit-80.png" alt="interdit">
+        </picture>
+        <a href="{{ url_racine }}">Retourner à la page d'accueil</a>
+    </section>
+    {% endif %}
 {% endblock %}

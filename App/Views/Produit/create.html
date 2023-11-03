@@ -7,6 +7,15 @@
     <section class="ajout_timbre">
         <h1>Ajouter d'un timbre</h1>
         <form action="store" method="post" enctype="multipart/form-data" class="formulaire-timbre">
+            {% if errors is defined %}
+        
+            <ol>
+                {% for error in errors %}
+                <li class="error">{{error}}</li>
+                {% endfor %}
+            </ol>
+    
+            {% endif %}
             <div>
                 <label for="nom">Nom</label>
                 <input type="text" name="nom" id="nom">
@@ -68,7 +77,7 @@
             </div>
             <div>
                 <label for="image">Images secondaire</label>
-                <input type="file" name="image[]" multiple id="image" accept="image/*"">
+                <input type="file" name="image[]" multiple id="image" accept="image/*">
             </div>
             <div>
                 <input class="bouton" type="submit" value="Enregistrer">

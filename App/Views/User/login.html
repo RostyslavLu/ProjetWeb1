@@ -4,23 +4,36 @@
 
 {% block body %}
 
-    <section class="connexion">
-        <h1>Bienvenue!</h1>
-        <form action="auth" method="post" class="form_login">
-            <div>
-                <label for="courriel">Courriel</label>
-                <input type="email" name="courriel" id="courriel">
-            </div>
-            <div>
-                <label for="mot_de_passe">Mot de passe</label>
-                <input type="password" name="mot_de_passe" id="mot_de_passe">
-            </div>
-            <div>
-                <input class="bouton" type="submit" value="Se connecter">
-            </div>
-            <div>
-                <span>Nouvel utilisateur? <a href="{{ url_racine }}user/create">Créez un compte ici</a></span>
-            </div>
-    </section>
+<section class="connexion">
+    {% if session.user_nom %}
+    <span><img src="{{ url_racine }}assets/img/icon/icons8-error-100.png" alt="oops"></span>
+    <span>{{session.user_nom}}</span>
+    <h1 class="avertissement">Vous êtes déjà connecté!</h1>
+    <a href="{{ url_racine }}">Retourner à la page d'accueil</a>
+    <a href="{{ url_racine }}user/logout">Quitter</a>
+
+    {% else %}
+    <h1>Bienvenue!</h1>
+    <form action="auth" method="post" class="form_login">
+        {% if error is defined %}
+        <span class="error">{{error}}</span>
+        {% endif %}
+        <div>
+            <label for="courriel">Courriel</label>
+            <input type="email" name="courriel" id="courriel" value="{{data.courriel}}">
+        </div>
+        <div>
+            <label for="mot_de_passe">Mot de passe</label>
+            <input type="password" name="mot_de_passe" id="mot_de_passe" value="{{data.mot_de_passe}}">
+        </div>
+        <div>
+            <input class="bouton" type="submit" value="Se connecter">
+        </div>
+        <div>
+            <span>Nouvel utilisateur? <a href="{{ url_racine }}user/create">Créez un compte ici</a></span>
+        </div>
+    </form>
+    {% endif %}
+</section>
 
 {% endblock %}

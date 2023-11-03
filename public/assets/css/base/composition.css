@@ -20,6 +20,12 @@ section > header {
 } 
 
 /* general */
+
+.error {
+    color: var(--secondary-color-light);
+    margin-top: var(--space-lg);
+}
+
 footer {
     display: flex;
     flex-direction: column;
