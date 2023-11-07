@@ -31,11 +31,20 @@ class User extends \Core\Controller
     {
 
         $id = $this->route_params['id'];
-        $showId = \App\Models\User::selectId($id);
 
+        $showId = \App\Models\User::selectId($id);
+        $encheres = \App\Models\Enchere::selectMembreId($id);
+        foreach ($encheres as $key => $value) {
+            $produit = \App\Models\Produit::selectId($value['Produit_id']);
+            $encheres[$key]['nom'] = $produit['nom'];
+        }
+        //echo "<pre>";
+        //print_r($encheres);
+        //die(); 
         View::renderTemplate('User/show.html', [
             'id' => $id,
             'user' => $showId,
+            'encheres' => $encheres,
             'url_racine' => $this->url_racine,
             'session' => $_SESSION
         ]);
@@ -160,6 +169,31 @@ class User extends \Core\Controller
 
             }
         } 
+    }
+
+    public function offreFavorite()
+    {
+        $enchereId = $this->route_params['id'];
+        $userId = $_SESSION['user_id'];
+        $data = [
+            'Enchere_id' => $enchereId,
+            'Membre_id' => $userId,
+        ];
+        $liste = \App\Models\Encherfavorit::insert($data);
+        
+        header('Location: ../../enchere/index');
+        
+
+    }
+    public function offreFavoriteDelete()
+    {
+        $enchereId = $this->route_params['id'];
+        $userId = $_SESSION['user_id'];
+        $liste = \App\Models\Encherfavorit::delete($enchereId, $userId);
+        
+        header('Location: ../../enchere/index');
+        
+
     }
 
     /**

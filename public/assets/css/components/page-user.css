@@ -1,0 +1,15 @@
+.page-user {
+    display: flex;
+    flex-wrap: wrap;
+    padding: var(--space-lg);
+    gap: var(--space-lg);
+}
+
+.page-user > aside {
+    flex-basis: 30ch;
+    flex-grow: 1;
+}
+.page-user article {
+    flex-basis: 60ch;
+    flex-grow: 2;
+}

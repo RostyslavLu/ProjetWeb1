@@ -3,7 +3,7 @@
 {% block title %}Timbre{% endblock %}
 
 {% block body %}
-
+{% if session.privilege == 1 or session.privilege == 2 %}
 <section class="ajout_timbre">
     <h1>Formulaire modification d'un timbre</h1>
     
@@ -67,5 +67,13 @@
 
         </form>
 </section>
-
+{% else %}
+<section class="access_denied">
+    <h1>Vous n'avez pas les droits pour accéder à cette page</h1>
+    <picture>
+        <img src="{{ url_racine }}/assets/img/icon/icons8-interdit-80.png" alt="interdit">
+    </picture>
+    <a href="{{ url_racine }}">Retourner à la page d'accueil</a>
+</section>
+{% endif %}
 {% endblock %}

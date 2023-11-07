@@ -1,6 +1,6 @@
 footer {
     background-color: var(--main-color-dark);
-    padding: var(--space-xxl);
+    padding: var(--space-lg);
 }
 
 .footer-categorie-titre {

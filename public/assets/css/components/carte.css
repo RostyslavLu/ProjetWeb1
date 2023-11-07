@@ -1,6 +1,7 @@
 .carte {
     border: 1px solid var(--main-color-medium);
     border-radius: 5px;
+    max-height: 700px;
 }
 
 .carte:hover {
@@ -36,7 +37,7 @@
 
 .carte-entete svg {
     max-height: 48px;
-    stroke: var(--secondary-color-dark);
+    /* stroke: var(--secondary-color-dark); */
 }
 
 .carte-entete svg:hover {

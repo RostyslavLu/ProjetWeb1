@@ -1,44 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Timbre{% endblock %}
+{% block title %}{{ produit.nom }} {% endblock %}
 
 {% block body %}
 
-    <!-- <h1>Page user  show {{id}}</h1>
-    <table>
-        <tr>
-            <th>id</th>
-            <th>nom</th>
-            <th>description</th>
-            <th>date creation</th>
-            <th>couleurs</th>
-            <th>pays</th>
-            <th>tirage</th>
-            <th>dimensions</th>
-            <th>certification</th>
-            <th>condition</th>
-        </tr>
-        <tr>
-            <td>{{ produit.id }}</td>
-            <td>{{ produit.nom }}</td>
-            <td>{{ produit.description }}</td>
-            <td>{{ produit.date_creation }}</td>
-            <td>{{ produit.couleurs }}</td>
-            <td>{{ produit.pays }}</td>
-            <td>{{ produit.tirage }}</td>
-            <td>{{ produit.dimensions }}</td>
-            <td>{{ produit.certifie }}</td>
-            <td>{{ produit.Condition_id }}</td>
 
-        </tr>
-    </table>
-    <a href="../delete/{{id}}">Effacer</a> -->
     <header class="entete-timbre">
         <div class="timbre-titre">
             <h2>Lot {{ produit.nom }}</h2>
-            <p>Lot # {{produit.id}} | En cours</p>
+            <p>Lot # {{ produit.id }} | En cours</p>
         </div>
-        <a href="{{ url_racine }}produit/index">&#60;&nbsp;retour au catalogue timbres</a>
+        <a href="{{ url_racine }}enchere/index">&#60;&nbsp;retour au catalogue d'encheres</a>
     </header>
     <main>
 
@@ -56,25 +28,30 @@
         <article class="timbre-info">
             <header>
                 <strong>Offre actuelle</strong>
-                <h2><strong>10.50&nbsp;$</strong></h2>
-                <p><strong>Mise courante&nbsp;</strong>1 offre</p>
-                <div class="timbre-miser">
+                <h2><strong>{{produit.prix_plancher}}&nbsp;$</strong></h2>
+                <p><strong>Mise courante&nbsp;</strong>{{produit.offresCount}}</p>
+
+                {% if session.user_id == produit.membreId %}
+                <a href="{{ url_racine }}produit/update/{{ produit.id }}" class="bouton">Modifier</a>
+                {% else %}
+                
+                <form class="timbre-miser" action="" method="post">
                     <label for="mise" hidden>Mise</label>
-                    <input type="text" id="mise" value="11.00">
-                    <button>Miser</button>
-                </div>
+                    <input type="text" id="mise" value="{{produit.prix_plancher+1}}">
+                    <input class="bouton" type="submit" value="Miser">
+                </form>
+                {% endif %}
             </header>
-            <div>
+            <div>   
                 <p><strong>Description&nbsp;</strong> {{ produit.description }}</p>
-                <p><strong>Type:&nbsp;</strong>Général</p>
-                <p><strong>Condition&nbsp;</strong>Bonne</p>
+                <p><strong>Type&nbsp;</strong>{{ produit.type }}</p>
+                <p><strong>Condition&nbsp;</strong>{{ produit.condition }}</p>
                 <p><strong>Pays d'origine&nbsp;</strong>{{ produit.pays }}</p>
                 <p><strong>Année de timbre&nbsp;</strong>{{ produit.date_creation }}</p>
             </div>
             <div>
-                <p>Début enchère 01.09.2023</p>
-                <p>Fin enchère 01.10.2023</p>
-
+                <p><strong>Début enchère&nbsp;</strong>{{ produit.date_debut }}</p>
+                <p><strong>Fin enchère&nbsp;</strong>{{ produit.date_fin }}</p>
             </div>
         </article>
     </section>

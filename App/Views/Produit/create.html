@@ -3,86 +3,103 @@
 {% block title %}Ajouter d'un timbre{% endblock %}
 
 {% block body %}
+{% if session.privilege == 1 or session.privilege == 2 %}
+<section class="ajout_timbre">
+    <h1>Ajouter d'un timbre</h1>
+    <form action="store" method="post" enctype="multipart/form-data" class="formulaire-timbre">
+        {% if errors is defined %}
 
-    <section class="ajout_timbre">
-        <h1>Ajouter d'un timbre</h1>
-        <form action="store" method="post" enctype="multipart/form-data" class="formulaire-timbre">
-            {% if errors is defined %}
-        
-            <ol>
-                {% for error in errors %}
-                <li class="error">{{error}}</li>
+        <ol>
+            {% for error in errors %}
+            <li class="error">{{error}}</li>
+            {% endfor %}
+        </ol>
+
+        {% endif %}
+        <div>
+            <label for="nom">Nom</label>
+            <input type="text" name="nom" id="nom" value="{{data.nom}}">
+        </div>
+        <div>
+            <label for="description">Description</label>
+            <textarea name="description" id="description" cols="30" rows="10">{{data.description}}</textarea>
+        </div>
+        <div>
+            <label for="date_creation">Date creation</label>
+            <input type="text" name="date_creation" id="date_creation" placeholder="YYYY"
+                value="{{data.date_creation}}">
+        </div>
+        <div>
+            <label for="couleurs">Couleurs</label>
+            <input type="text" name="couleurs" id="couleurs" value="{{data.couleurs}}">
+        </div>
+        <div>
+            <label for="image_principale">Image principale</label>
+            <input type="file" name="image_principale" id="image_principale" accept="image/*"">
+        </div>
+        <div>
+            <label for=" pays">Pays</label>
+            <input type="text" name="pays" id="pays" value="{{data.pays}}">
+        </div>
+        <div>
+            <label for="tirage">Tirage</label>
+            <input type="number" name="tirage" id="tirage" value="{{data.tirage}}">
+        </div>
+        <div>
+            <label for="dimensions">Dimensions</label>
+            <input type="text" name="dimensions" id="dimensions" value="{{data.dimensions}}">
+        </div>
+        <div>
+            <label for="prix_plancher">Prix</label>
+            <input type="number" name="prix_plancher" id="prix_plancher" value="{{data.prix_plancher}}">
+        </div>
+        <div>
+            <label for="date_debut">Début enchère</label>
+            <input type="datetime-local" name="date_debut" id="date_debut" value="{{data.date_debut}}">
+        </div>
+        <div>
+            <label for="date_fin">Fin enchère</label>
+            <input type="datetime-local" name="date_fin" id="date_fin" value="{{data.date_fin}}">
+        </div>
+        <div>
+            <label for="certifie">Certification</label>
+            <select name="certifie" id="certifie">
+                <option value="1">Oui</option>
+                <option value="0">Non</option>
+            </select>
+        </div>
+        <div>
+            <label for="Type_id">Type</label>
+            <select name="Type_id" id="Type_id">
+                {% for type in types %}
+                <option value="{{ type.id }}">{{ type.type_nom }}</option>
                 {% endfor %}
-            </ol>
-    
-            {% endif %}
-            <div>
-                <label for="nom">Nom</label>
-                <input type="text" name="nom" id="nom">
-            </div>
-            <div>
-                <label for="description">Description</label>
-                <!-- <input type="text" name="description" id="description"> -->
-                <textarea name="description" id="description" cols="30" rows="10"></textarea>
-            </div>
-            <div>
-                <label for="date_creation">Date creation</label>
-                <input type="text" name="date_creation" id="date_creation" placeholder="YYYY">
-            </div>
-            <div>
-                <label for="couleurs">Couleurs</label>
-                <input type="text" name="couleurs" id="couleurs">
-            </div>
-            <div>
-                <label for="image_principale">Image principale</label>
-                <input type="file" name="image_principale" id="image_principale" accept="image/*"">
-            </div>
-            <div>
-                <label for="pays">Pays</label>
-                <input type="text" name="pays" id="pays">
-            </div>
-            <div>
-                <label for="tirage">Tirage</label>
-                <input type="number" name="tirage" id="tirage">
-            </div>
-            <div>
-                <label for="dimensions">Dimensions</label>
-                <input type="text" name="dimensions" id="dimensions">
-            </div>
-            <div>
-                <label for="prix_plancher">Prix</label>
-                <input type="number" name="prix_plancher" id="prix_plancher"></div>
-            <div>
-                <label for="date_debut">Début enchère</label>
-                <input type="datetime-local" name="date_debut" id="date_debut">
-            </div>
-            <div>
-                <label for="date_fin">Fin enchère</label>
-                <input type="datetime-local" name="date_fin" id="date_fin">
-            </div>
-            <div>
-                <label for="certifie">Certification</label>
-                <select name="certifie" id="certifie">
-                    <option value="1">Oui</option>
-                    <option value="0">Non</option>
-                </select>
-            </div>
-            <div>
-                <label for="Condition_id">Condition</label>
-                <select name="Condition_id" id="Condition_id">
-                    {% for condition in conditions %}
-                        <option value="{{ condition.id }}">{{ condition.type }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div>
-                <label for="image">Images secondaire</label>
-                <input type="file" name="image[]" multiple id="image" accept="image/*">
-            </div>
-            <div>
-                <input class="bouton" type="submit" value="Enregistrer">
-            </div>
-        </form>
-    </section>
-
+            </select>
+        </div>
+        <div>
+            <label for="Condition_id">Condition</label>
+            <select name="Condition_id" id="Condition_id">
+                {% for condition in conditions %}
+                <option value="{{ condition.id }}">{{ condition.type }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="image">Images secondaire</label>
+            <input type="file" name="image[]" multiple id="image" accept="image/*">
+        </div>
+        <div>
+            <input class="bouton" type="submit" value="Enregistrer">
+        </div>
+    </form>
+</section>
+{% else %}
+<section class="access_denied">
+    <h1>Vous n'avez pas les droits pour accéder à cette page</h1>
+    <picture>
+        <img src="{{ url_racine }}/assets/img/icon/icons8-interdit-80.png" alt="interdit">
+    </picture>
+    <a href="{{ url_racine }}">Retourner à la page d'accueil</a>
+</section>
+{% endif %}
 {% endblock %}

@@ -1,25 +1,77 @@
 {% extends "base.html" %}
 
-{% block title %}User{% endblock %}
+{% block title %}Page {{user.prenom}}&nbsp;{{user.nom}}{% endblock %}
 
 {% block body %}
 {% if session.user_id == id %}
-    <section>
-        <h1>Page user  show {{id}}</h1>
-        <table>
-            <tr>
-                <th>id</th>
-                <th>nom</th>
-                <th>prenom</th>
-                <th>courriel</th>
-            </tr>
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.nom }}</td>
-                <td>{{ user.prenom }}</td>
-                <td>{{ user.courriel }}</td>
-            </tr>
-        </table>
+    <section class="page-user">
+        <aside>
+            <h2>Données personel</h2>
+            <div>
+                <ol>
+                    <li>Nom : {{ user.nom }}</li>
+                    <li>Prenom : {{ user.prenom }}</li>
+                    <li>Courriel : {{ user.courriel }}</li>
+                </ol>
+                <a href="{{ url_racine }}user/update/{{user.id}}">Modifier</a>
+            </div>
+        </aside>
+        <article class="mes_encheres">
+            <h2>Mes enchères</h2>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Timbre</th>
+                            <th>Prix plancher</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for enchere in encheres %}
+                        <tr>
+                            <td>{{ enchere.id }}</td>
+                            <td><a href="{{ url_racine }}enchere/show/{{ enchere.id }}">{{ enchere.nom }}</a></td>
+                            <td>{{ enchere.prix_plancher }}</td>
+                            <td><a href="{{ url_racine }}produit/update/{{ enchere.Produit_id }}">Modifier</a></td>
+                            <td><a href="{{ url_racine }}produit/delete/{{ enchere.Produit_id}}">&#10006;</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <a class="bouton" href="{{ url_racine }}produit/create">Ajouter enchére</a>
+            </div>
+        </article>
+        <article class="enchers_favorit">
+            <h2>Mon enchères favorit</h2>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Timbre</th>
+                            <th>Prix plancher</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href=""></a></td>
+                            <td><a href=""></a></td>
+                            <td><a href=""></a></td>
+                            <td><a href=""></a></td>
+                            <td><a href=""></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+
     </section>
     {% else %}
     <section class="access_denied">
