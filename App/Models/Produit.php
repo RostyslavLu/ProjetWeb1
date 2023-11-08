@@ -25,6 +25,9 @@ class Produit extends \Core\Model
         $stmt = $db->query('SELECT * FROM Produit');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    /**
+     * fonction pour inserer un timbre
+     */
     public static function insert($data) {
         $db = static::getDB();
         
@@ -39,6 +42,9 @@ class Produit extends \Core\Model
         $stmt->execute();
         return $db->lastInsertId();
     }
+    /**
+     * fonction pour selectionner un timbre par id
+     */
     public static function selectId($value, $field ='id') {
         $db = static::getDB();
         $sql = "SELECT * FROM Produit WHERE id = :id";
@@ -53,6 +59,9 @@ class Produit extends \Core\Model
             exit;
         }
     }
+    /**
+     * fonction pour effacer un timbre
+     */
     public static function delete($value){
         $db = static::getDB();
         $sql = "DELETE FROM Produit WHERE id = :id";
@@ -60,18 +69,16 @@ class Produit extends \Core\Model
         $stmt->bindValue(":id", $value);
         $stmt->execute();
     }
+    /**
+     * fonction pour rechercher un timbre par nom
+     */
     public static function search($value){
         $db = static::getDB();
         $sql = "SELECT * FROM Produit WHERE nom LIKE :nom";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(":nom", "%".$value."%");
         $stmt->execute();
-        $count = $stmt->rowCount();
-        if ($count > 0) {
-            return $stmt->fetchAll();
-        } else {
-            return "";
-            exit;
-        }
+
+        return $stmt->fetchAll();
     }
 }

@@ -5,15 +5,14 @@
 {% block body %}
 
     <main>
-        <section>
+        <section class="recherche_resultats">
          <h1>Resultat de la recherche</h1>
-         <ul>
-         {% for resultat in resultats %}
-
-
-                <li><a href="{{ url_racine }}produit/show/{{ resultat.id }}">{{ resultat.nom }}</a></li>
+         <ol start="1" type="1">
+            {% for resultat in resultats %}
+            <li><a href="{{ url_racine }}produit/show/{{ resultat.id }}">{{ resultat.nom }}</a></li>
             {% endfor %}    
         </ul>
+        <small>{{countListe}}</small>
         </section>
     </main>
 

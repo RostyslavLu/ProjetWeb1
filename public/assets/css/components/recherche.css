@@ -1,0 +1,5 @@
+.recherche_resultats li {
+    list-style: inside all;
+    margin-bottom: var(--space-s);
+    padding: var(--space-s);
+}
