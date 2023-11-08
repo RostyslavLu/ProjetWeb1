@@ -185,8 +185,6 @@ class User extends \Core\Controller
         $liste = \App\Models\Encherfavorit::insert($data);
         
         header('Location: ../../enchere/index');
-        
-
     }
     public function offreFavoriteDelete()
     {
@@ -195,8 +193,6 @@ class User extends \Core\Controller
         $liste = \App\Models\Encherfavorit::delete($enchereId, $userId);
         
         header('Location: ../../enchere/index');
-        
-
     }
 
     /**

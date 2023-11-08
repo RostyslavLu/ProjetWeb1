@@ -32,26 +32,42 @@ class Produit extends \Core\Controller
     public function show()
     {
         $id = $this->route_params['id'];
-        
+
         $images = \App\Models\Images::selectId($id);
         $enchere = \App\Models\Enchere::selectProduitId($id);
         $produit = \App\Models\Produit::selectId($id);
         $condition = \App\Models\Condition::selectId($produit['Condition_id']);
         $type = \App\Models\Type::selectId($produit['Type_id']);
-        $offresCount = \App\Models\Offre::selectOffresCount($enchere['id']);
-        
+
+        //quantité d'offres pour cette enchère
+        $offres = \App\Models\Offre::selectOffres($enchere['id']);
+        $offresCount = count($offres);
+        if ($offresCount > 0) {
+            $offresCount = $offresCount . " offre(s)";
+        } else {
+            $offresCount = "Aucune offre pour cette enchère";
+        }
+        //montant de l'offre la plus élevée
+        $offrePlusEleve = \App\Models\Offre::selectOffrePlusEleve($enchere['id']);
+
+        if ($offrePlusEleve == null) {
+            $montantOffrePlusEleve = $enchere['prix_plancher'];
+        } else {
+            $montantOffrePlusEleve = $offrePlusEleve['montant'];
+            $membreIdOffrePlusEleve = $offrePlusEleve['Membre_id'];
+            $membreOffrePlusEleve = \App\Models\User::selectId($membreIdOffrePlusEleve);
+        }
+
         $produit['condition'] = $condition['type'];
         $produit['enchereId'] = $enchere['id'];
         $produit['date_debut'] = $enchere['date_debut'];
         $produit['date_fin'] = $enchere['date_fin'];
-        $produit['prix_plancher'] = $enchere['prix_plancher'];
+        $produit['prix_plancher'] = $montantOffrePlusEleve;
         $produit['type'] = $type['type_nom'];
         $produit['offresCount'] = $offresCount;
         $produit['membreId'] = $enchere['Membre_id'];
+        $produit['membreOffrePlusEleve'] = $membreOffrePlusEleve['courriel'];
 
-        // echo "<pre>";
-        // print_r($produit);
-        // die();
         View::renderTemplate('Produit/show.html', [
             'id' => $id,
             'produit' => $produit,
@@ -75,7 +91,7 @@ class Produit extends \Core\Controller
     }
     public function store()
     {
-        if ($_SERVER["REQUEST_METHOD"]!="POST") {
+        if ($_SERVER["REQUEST_METHOD"] != "POST") {
             View::renderTemplate('Produit/create.html', [
                 'url_racine' => $this->url_racine,
                 'session' => $_SESSION
@@ -94,12 +110,12 @@ class Produit extends \Core\Controller
         $validation->name('tirage')->value($tirage)->pattern('int')->min(1)->max(20);
         //$validation->name('dimensions')->value($dimensions)->pattern('text')->max(30);
 
-        if ($validation->isSuccess()){
+        if ($validation->isSuccess()) {
             $image_principale = $_FILES['image_principale']['name'];
             $tmp_name = $_FILES['image_principale']['tmp_name'];
             $_POST['image_principale'] = $image_principale;
 
-            
+
             $uploadfile = "assets/img/upload/" . basename($image_principale);
             move_uploaded_file($tmp_name, $uploadfile);
             $data = [

@@ -40,19 +40,21 @@ class Offre extends \Core\Model
         return $db->lastInsertId();
     }
 
-    public static function selectOffresCount($value, $field ='Enchere_id') {
+    public static function selectOffres($value, $field ='Enchere_id') {
         $db = static::getDB();
         $sql = "SELECT * FROM enchere_stempee.Offre WHERE Enchere_id = :Enchere_id";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(":Enchere_id", $value);
         $stmt->execute();
-        $count = $stmt->rowCount();
-        if ($count > 0) {
-            return  $count." offre(s)";
-        } else {
-            $count = "Aucune offre pour cette enchère";
-            return $count;
-        }
+        return $stmt->fetchAll();
+    }
+    public static function selectOffrePlusEleve($value, $field ='Enchere_id') {
+        $db = static::getDB();
+        $sql = "SELECT * FROM enchere_stempee.Offre WHERE Enchere_id = :Enchere_id ORDER BY montant DESC LIMIT 1";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":Enchere_id", $value);
+        $stmt->execute();
+        return $stmt->fetch();
     }
 
 }

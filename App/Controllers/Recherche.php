@@ -21,6 +21,9 @@ class Recherche extends \Core\Controller
     public function indexAction()
     {
         $search = $_GET['rechercher'];
+        if ($search == "") {
+            header('Location: '.$this->url_racine);
+        }
         $liste = \App\Models\Produit::search($search);
         foreach($liste as $key => $value){
             $enchere = \App\Models\Enchere::selectProduitId($liste[$key]['id']);

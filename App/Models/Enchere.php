@@ -75,4 +75,18 @@ class Enchere extends \Core\Model
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    public static function selectEncheresArchive() {
+        $db = static::getDB();
+        $sql = "SELECT * FROM Enchere WHERE date_fin < NOW()";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    public static function selectEncheresActuel() {
+        $db = static::getDB();
+        $sql = "SELECT * FROM Enchere WHERE date_fin > NOW()";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }

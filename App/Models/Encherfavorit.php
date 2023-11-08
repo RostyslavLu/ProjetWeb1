@@ -55,6 +55,9 @@ class Encherfavorit extends \Core\Model
         }
 
     }
+    /**
+     * fonction pour ajouter une enchere dans les favoris
+     */
     public static function addEncherfavorit($id, $userId) {
         $db = static::getDB();
         $stmt = $db->prepare('SELECT * FROM Encherfavorit WHERE Enchere_id = :id AND Membre_id = :userId');

@@ -22,20 +22,40 @@ class Enchere extends \Core\Controller
     public function indexAction()
     {
         $liste = \App\Models\Enchere::getAll();
-        
 
-        foreach($liste as $key => $value){
+
+        foreach ($liste as $key => $value) {
             $produit = \App\Models\Produit::selectId($value['Produit_id']);
-            $offresCount = \App\Models\Offre::selectOffresCount($liste[$key]['id']);
+
+            $offres = \App\Models\Offre::selectOffres($liste[$key]['id']);
+            $enchere = \App\Models\Enchere::selectProduitId($value['Produit_id']);
+
+            $offresCount = count($offres);
+            if ($offresCount > 0) {
+                $offresCount = $offresCount . " offre(s)";
+            } else {
+                $offresCount = "Aucune offre pour cette enchère";
+            }
+
+            //montant de l'offre la plus élevée
+            $offrePlusEleve = \App\Models\Offre::selectOffrePlusEleve($enchere['id']);
+
+            if ($offrePlusEleve == null) {
+                $montantOffrePlusEleve = $enchere['prix_plancher'];
+            } else {
+                $montantOffrePlusEleve = $offrePlusEleve['montant'];
+                $membreIdOffrePlusEleve = $offrePlusEleve['Membre_id'];
+                $membreOffrePlusEleve = \App\Models\User::selectId($membreIdOffrePlusEleve);
+            }
             if (isset($_SESSION['user_id'])) {
                 $echereUserFavorite = \App\Models\Encherfavorit::addEncherfavorit($liste[$key]['id'], $_SESSION['user_id']);
-            }else{
-            
+            } else {
+
                 $echereUserFavorite = 0;
             }
-            if($echereUserFavorite){
+            if ($echereUserFavorite) {
                 $echereUserFavorite = 1;
-            }else{
+            } else {
 
                 $echereUserFavorite = 0;
             }
@@ -43,6 +63,8 @@ class Enchere extends \Core\Controller
             $liste[$key]['nom'] = $produit['nom'];
             $liste[$key]['image_principale'] = $produit['image_principale'];
             $liste[$key]['enchereUserFavorite'] = $echereUserFavorite;
+            $liste[$key]['prix_plancher'] = $montantOffrePlusEleve;
+            $liste[$key]['membreOffrePlusEleve'] = $membreOffrePlusEleve['courriel'];
 
         }
 
@@ -52,5 +74,4 @@ class Enchere extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
-
 }

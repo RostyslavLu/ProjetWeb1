@@ -28,16 +28,18 @@
         <article class="timbre-info">
             <header>
                 <strong>Offre actuelle</strong>
+
                 <h2><strong>{{produit.prix_plancher}}&nbsp;$</strong></h2>
+                
                 <p><strong>Mise courante&nbsp;</strong>{{produit.offresCount}}</p>
 
                 {% if session.user_id == produit.membreId %}
                 <a href="{{ url_racine }}produit/update/{{ produit.id }}" class="bouton">Modifier</a>
                 {% else %}
                 
-                <form class="timbre-miser" action="" method="post">
-                    <label for="mise" hidden>Mise</label>
-                    <input type="text" id="mise" value="{{produit.prix_plancher+1}}">
+                <form class="timbre-miser" action="{{ url_racine }}offre/store/{{ produit.id }}" method="post">
+                    <label for="montant" hidden>Mise</label>
+                    <input type="text" name="montant" id="montant" value="{{produit.prix_plancher+1}}">
                     <input class="bouton" type="submit" value="Miser">
                 </form>
                 {% endif %}
