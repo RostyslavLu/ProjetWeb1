@@ -28,9 +28,9 @@ class Enchere extends \Core\Controller
             $produit = \App\Models\Produit::selectId($value['Produit_id']);
             $offresCount = \App\Models\Offre::selectOffresCount($liste[$key]['id']);
             if (isset($_SESSION['user_id'])) {
-                $echereUserFavorite = \App\Models\Encherfavorit::selectEncherfavorit($liste[$key]['id'], $_SESSION['user_id']);
+                $echereUserFavorite = \App\Models\Encherfavorit::addEncherfavorit($liste[$key]['id'], $_SESSION['user_id']);
             }else{
-            //$echereUserFavorite = \App\Models\Encherfavorit::selectEncherfavorit($liste[$key]['id'], $_SESSION['user_id']);
+            
                 $echereUserFavorite = 0;
             }
             if($echereUserFavorite){
@@ -52,6 +52,5 @@ class Enchere extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
-
 
 }

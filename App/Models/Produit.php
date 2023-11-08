@@ -60,4 +60,18 @@ class Produit extends \Core\Model
         $stmt->bindValue(":id", $value);
         $stmt->execute();
     }
+    public static function search($value){
+        $db = static::getDB();
+        $sql = "SELECT * FROM Produit WHERE nom LIKE :nom";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":nom", "%".$value."%");
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        if ($count > 0) {
+            return $stmt->fetchAll();
+        } else {
+            return "";
+            exit;
+        }
+    }
 }

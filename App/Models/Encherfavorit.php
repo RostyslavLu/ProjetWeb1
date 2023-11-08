@@ -39,7 +39,23 @@ class Encherfavorit extends \Core\Model
         $stmt->execute();
         return $db->lastInsertId();
     }
-    public static function selectEncherfavorit($id, $userId) {
+    public static function selectEncherfavorit($value, $field ='id') {
+        $db = static::getDB();
+        $sql = "SELECT * FROM Encherfavorit WHERE Membre_id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":id", $value);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        if ($count > 0) {
+            
+            return $stmt->fetchAll();
+        } else {
+            return "";
+            exit;
+        }
+
+    }
+    public static function addEncherfavorit($id, $userId) {
         $db = static::getDB();
         $stmt = $db->prepare('SELECT * FROM Encherfavorit WHERE Enchere_id = :id AND Membre_id = :userId');
         $stmt->bindValue(':id', $id);

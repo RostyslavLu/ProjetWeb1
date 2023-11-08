@@ -19,10 +19,10 @@
             <a href="{{ url_racine }}"><img src="{{ url_racine }}assets/img/logo/logo-1-alt.png" alt="logo"
                     class="logo"></a>
         </header>
-        <div class="champ_recherche">
+        <form class="champ_recherche" action="{{ url_racine }}Recherche/index" method="get">
             <label for="rechercher" hidden>Recherche</label>
             <input type="search" placeholder="rechercher" name="rechercher" id="rechercher">
-        </div>
+        </form>
         <div class="liens_page">
             <a href="#">Notre mission</a>
             <a href="#">Présentation de Lord Stampee</a>

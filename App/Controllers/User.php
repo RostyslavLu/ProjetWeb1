@@ -29,24 +29,27 @@ class User extends \Core\Controller
 
     public function show()
     {
-
         $id = $this->route_params['id'];
-
-        $showId = \App\Models\User::selectId($id);
+        //echo "<pre>";
+        $user = \App\Models\User::selectId($id);
         $encheres = \App\Models\Enchere::selectMembreId($id);
+        
+        $enchereFavorite = \App\Models\Encherfavorit::selectEncherfavorit($id);
+        //print_r($enchereFavorite);
+        
         foreach ($encheres as $key => $value) {
             $produit = \App\Models\Produit::selectId($value['Produit_id']);
             $encheres[$key]['nom'] = $produit['nom'];
+
         }
-        //echo "<pre>";
-        //print_r($encheres);
-        //die(); 
+        
         View::renderTemplate('User/show.html', [
             'id' => $id,
-            'user' => $showId,
+            'user' => $user,
             'encheres' => $encheres,
             'url_racine' => $this->url_racine,
-            'session' => $_SESSION
+            'session' => $_SESSION,
+            'enchereFavorite' => $enchereFavorite
         ]);
     }
 

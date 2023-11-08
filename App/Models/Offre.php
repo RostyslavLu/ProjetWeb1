@@ -39,6 +39,7 @@ class Offre extends \Core\Model
         $stmt->execute();
         return $db->lastInsertId();
     }
+
     public static function selectOffresCount($value, $field ='Enchere_id') {
         $db = static::getDB();
         $sql = "SELECT * FROM enchere_stempee.Offre WHERE Enchere_id = :Enchere_id";

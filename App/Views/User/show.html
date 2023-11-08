@@ -33,7 +33,7 @@
                         {% for enchere in encheres %}
                         <tr>
                             <td>{{ enchere.id }}</td>
-                            <td><a href="{{ url_racine }}enchere/show/{{ enchere.id }}">{{ enchere.nom }}</a></td>
+                            <td>{{ enchere.nom }}</td>
                             <td>{{ enchere.prix_plancher }}</td>
                             <td><a href="{{ url_racine }}produit/update/{{ enchere.Produit_id }}">Modifier</a></td>
                             <td><a href="{{ url_racine }}produit/delete/{{ enchere.Produit_id}}">&#10006;</a></td>
@@ -49,6 +49,7 @@
         <article class="enchers_favorit">
             <h2>Mon enchères favorit</h2>
             <div>
+                {% if enchereFavorite %}
                 <table>
                     <thead>
                         <tr>
@@ -69,6 +70,9 @@
                         </tr>
                     </tbody>
                 </table>
+                {% else %}
+                <p>Vous n'avez pas d'enchères favorit</p>
+                {% endif %}
             </div>
         </article>
 
