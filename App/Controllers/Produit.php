@@ -52,12 +52,19 @@ class Produit extends \Core\Controller
 
         if ($offrePlusEleve == null) {
             $montantOffrePlusEleve = $enchere['prix_plancher'];
-        } else {
+        } 
+        else {
             $montantOffrePlusEleve = $offrePlusEleve['montant'];
-            $membreIdOffrePlusEleve = $offrePlusEleve['Membre_id'];
-            $membreOffrePlusEleve = \App\Models\User::selectId($membreIdOffrePlusEleve);
         }
+        if ($offrePlusEleve['montant'] < $enchere['prix_plancher'])  {
+            header('Location: ../produit/show/' . $id );
 
+        }
+        // echo "<pre>";
+        // print_r($offrePlusEleve);
+        // print_r($montantOffrePlusEleve);
+
+        // die();
         $produit['condition'] = $condition['type'];
         $produit['enchereId'] = $enchere['id'];
         $produit['date_debut'] = $enchere['date_debut'];
@@ -66,7 +73,7 @@ class Produit extends \Core\Controller
         $produit['type'] = $type['type_nom'];
         $produit['offresCount'] = $offresCount;
         $produit['membreId'] = $enchere['Membre_id'];
-        $produit['membreOffrePlusEleve'] = $membreOffrePlusEleve['courriel'];
+
 
         View::renderTemplate('Produit/show.html', [
             'id' => $id,

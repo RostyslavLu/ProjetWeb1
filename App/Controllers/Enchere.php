@@ -44,6 +44,7 @@ class Enchere extends \Core\Controller
                 $montantOffrePlusEleve = $enchere['prix_plancher'];
             } else {
                 $montantOffrePlusEleve = $offrePlusEleve['montant'];
+                
                 $membreIdOffrePlusEleve = $offrePlusEleve['Membre_id'];
                 $membreOffrePlusEleve = \App\Models\User::selectId($membreIdOffrePlusEleve);
             }
@@ -70,6 +71,33 @@ class Enchere extends \Core\Controller
 
         View::renderTemplate('Enchere/index.html',  [
             'encheres' => $liste,
+            'url_racine' => $this->url_racine,
+            'session' => $_SESSION
+        ]);
+    }
+    public function search () {
+        $search = $_GET['rechercher'];
+        if ($search == "") {
+            header('Location: '.$this->url_racine);
+        }
+        $liste = \App\Models\Produit::search($search);
+        foreach($liste as $key => $value){
+            $enchere = \App\Models\Enchere::selectProduitId($liste[$key]['id']);
+            $liste[$key]['date_debut'] = $enchere['date_debut'];
+            $liste[$key]['date_fin'] = $enchere['date_fin'];
+            $liste[$key]['prix_plancher'] = $enchere['prix_plancher'];
+        }
+        $countListe = count($liste);
+        if ($countListe > 0) {
+            $countListe = $countListe." résultat(s) pour votre recherche : ".$search;
+        } else {
+            $countListe = "Aucun résultat pour votre recherche : ".$search."";
+        } 
+
+
+        View::renderTemplate('Enchere/search.html',  [
+            'resultats' => $liste,
+            'countListe' => $countListe,
             'url_racine' => $this->url_racine,
             'session' => $_SESSION
         ]);
