@@ -56,14 +56,16 @@ class Produit extends \Core\Controller
         else {
             $montantOffrePlusEleve = $offrePlusEleve['montant'];
         }
-        if ($offrePlusEleve['montant'] < $enchere['prix_plancher'])  {
-            header('Location: ../produit/show/' . $id );
-
+        if (is_array($offrePlusEleve) && is_array($enchere)) {
+            if ($offrePlusEleve['montant'] < $enchere['prix_plancher'])  {
+                header('Location: ../produit/show/' . $id );
+            }
+        } else {
+            // Gérer le cas où $offrePlusEleve ou $enchere ne sont pas des tableaux
         }
         // echo "<pre>";
         // print_r($offrePlusEleve);
         // print_r($montantOffrePlusEleve);
-
         // die();
         $produit['condition'] = $condition['type'];
         $produit['enchereId'] = $enchere['id'];
