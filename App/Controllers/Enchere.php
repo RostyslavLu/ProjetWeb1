@@ -21,16 +21,17 @@ class Enchere extends \Core\Controller
      */
     public function indexAction()
     {
-        $liste = \App\Models\Enchere::getAll();
+        $listeEncheres = \App\Models\Enchere::getAll();
+        $listeProduit = \App\Models\Produit::getAll();
+  
+        foreach ($listeProduit as $key => $value) {
+            //$produit = \App\Models\Produit::selectId($value['Produit_id']);
 
-
-        foreach ($liste as $key => $value) {
-            $produit = \App\Models\Produit::selectId($value['Produit_id']);
-
-            $offres = \App\Models\Offre::selectOffres($liste[$key]['id']);
-            $enchere = \App\Models\Enchere::selectProduitId($value['Produit_id']);
-
+            $enchere = \App\Models\Enchere::selectId($value['Enchere_id']);
+            $offres = \App\Models\Offre::selectOffres($enchere['id']);
             $offresCount = count($offres);
+
+
             if ($offresCount > 0) {
                 $offresCount = $offresCount . " offre(s)";
             } else {
@@ -44,33 +45,40 @@ class Enchere extends \Core\Controller
                 $montantOffrePlusEleve = $enchere['prix_plancher'];
             } else {
                 $montantOffrePlusEleve = $offrePlusEleve['montant'];
-                
-                $membreIdOffrePlusEleve = $offrePlusEleve['Membre_id'];
-                $membreOffrePlusEleve = \App\Models\User::selectId($membreIdOffrePlusEleve);
             }
+        
             if (isset($_SESSION['user_id'])) {
-                $echereUserFavorite = \App\Models\Encherfavorit::addEncherfavorit($liste[$key]['id'], $_SESSION['user_id']);
+               
+                $echereUserFavorite = \App\Models\Encherfavorit::selectUserEncheresFavorit($value['Enchere_id'], $_SESSION['user_id']);
+                
+                if ($echereUserFavorite != null) {
+                    $echereUserFavorite = 1;
+                } else {
+                    $echereUserFavorite = 0;
+                }
+
+
             } else {
 
-                $echereUserFavorite = 0;
+                $echereUserFavorite = null;
             }
-            if ($echereUserFavorite) {
-                $echereUserFavorite = 1;
-            } else {
 
-                $echereUserFavorite = 0;
-            }
-            $liste[$key]['offresCount'] = $offresCount;
-            $liste[$key]['nom'] = $produit['nom'];
-            $liste[$key]['image_principale'] = $produit['image_principale'];
-            $liste[$key]['enchereUserFavorite'] = $echereUserFavorite;
-            $liste[$key]['prix_plancher'] = $montantOffrePlusEleve;
-            $liste[$key]['membreOffrePlusEleve'] = $membreOffrePlusEleve['courriel'];
 
+            $listeProduit[$key]['offresCount'] = $offresCount;
+            $listeProduit[$key]['enchereUserFavorite'] = $echereUserFavorite;
+            $listeProduit[$key]['prix_plancher'] = $montantOffrePlusEleve;
+            $listeProduit[$key]['Membre_id'] = $enchere['Membre_id'];
+            $listeProduit[$key]['Produit_id'] = $value['id'];
+            $listeProduit[$key]['date_debut'] = $enchere['date_debut'];
+            $listeProduit[$key]['date_fin'] = $enchere['date_fin'];
         }
+        // echo "<pre>";
+        
+        // print_r($listeProduit);
+        // die();
 
         View::renderTemplate('Enchere/index.html',  [
-            'encheres' => $liste,
+            'encheres' => $listeProduit,
             'url_racine' => $this->url_racine,
             'session' => $_SESSION
         ]);
@@ -81,8 +89,10 @@ class Enchere extends \Core\Controller
             header('Location: '.$this->url_racine);
         }
         $liste = \App\Models\Produit::search($search);
+
+
         foreach($liste as $key => $value){
-            $enchere = \App\Models\Enchere::selectProduitId($liste[$key]['id']);
+            $enchere = \App\Models\Enchere::selectId($value['Enchere_id']);
             $liste[$key]['date_debut'] = $enchere['date_debut'];
             $liste[$key]['date_fin'] = $enchere['date_fin'];
             $liste[$key]['prix_plancher'] = $enchere['prix_plancher'];
@@ -94,7 +104,6 @@ class Enchere extends \Core\Controller
             $countListe = "Aucun résultat pour votre recherche : ".$search."";
         } 
 
-
         View::renderTemplate('Enchere/search.html',  [
             'resultats' => $liste,
             'countListe' => $countListe,
@@ -102,4 +111,33 @@ class Enchere extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
+    public function searchComplex() {
+        echo "<pre>";
+        print_r($_POST);
+        
+        $condition = $_POST['condition'];
+        $prixMin = $_POST['prixMin'];
+        $prixMax = $_POST['prixMax'];
+        $type = $_POST['type'];
+        $anneMin = $_POST['anneMin'];
+        $anneMax = $_POST['anneMax'];
+        $tirage = $_POST['tirage'];
+        $certification = $_POST['certification'];
+
+        $liste = \App\Models\Produit::searchComplex($condition, $type, $anneMin, $anneMax, $tirage, $certification);
+        foreach($liste as $key => $value){
+            $enchere = \App\Models\Enchere::selectId($value['Enchere_id']);
+  
+            $liste[$key]['prix_plancher'] = $enchere['prix_plancher'];
+        }
+        print_r($liste);
+        die();
+        $countListe = count($liste);
+        if ($countListe > 0) {
+            $countListe = $countListe." résultat(s) pour votre recherche : ".$condition." entre ".$prixMin." et ".$prixMax."";
+        } else {
+            $countListe = "Aucun résultat pour votre recherche : ".$condition." entre ".$prixMin." et ".$prixMax."";
+        }
+    }
+
 }

@@ -22,7 +22,7 @@ class User extends \Core\Model
     public static function getAll()
     {
         $db = static::getDB();
-        $stmt = $db->query('SELECT id, nom, prenom, courriel FROM membre');
+        $stmt = $db->query('SELECT id, nom, prenom, courriel FROM Membre');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public static function insert($data) {
@@ -73,6 +73,14 @@ class User extends \Core\Model
             header("location: login");
             exit;
         }
+    }
+    public static function insertCoupDeCoeur($Membre_id, $Enchere_id){
+        $db = static::getDB();
+        $sql = "INSERT INTO Enchere coup_de_coer VALUES 1 WHERE Membre_id = :Membre_id AND Enchere_id = :Enchere_id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":Membre_id", $Membre_id);
+        $stmt->bindValue(":Enchere_id", $Enchere_id);
+        $stmt->execute();
     }
 
 }

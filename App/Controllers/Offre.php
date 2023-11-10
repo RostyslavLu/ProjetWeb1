@@ -27,8 +27,11 @@ class Offre extends \Core\Controller
     public function store()
     {
         $Produit_id = $this->route_params;
-        $enchere = \App\Models\Enchere::selectProduitId($Produit_id['id']);
+        $produit = \App\Models\Produit::selectId($Produit_id['id']);
+        $enchere = \App\Models\Enchere::selectId($produit['Enchere_id']);
+    
         $offrePlusEleve = \App\Models\Offre::selectOffrePlusEleve($enchere['id']);
+
         if (!$_SESSION) {
             header('Location: ' . $this->url_racine . 'user/login');
         } else {

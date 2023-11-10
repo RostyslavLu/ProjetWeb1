@@ -39,32 +39,32 @@ class Encherfavorit extends \Core\Model
         $stmt->execute();
         return $db->lastInsertId();
     }
-    public static function selectEncherfavorit($value, $field ='id') {
+    /**
+     * fonction pour selectionner un timbre par id
+     */
+    public static function selectEncherfavorit($Membre_id) {
         $db = static::getDB();
-        $sql = "SELECT * FROM Encherfavorit WHERE Membre_id = :id";
+        $sql = "SELECT * FROM Encherfavorit WHERE Membre_id = :Membre_id";
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(":id", $value);
+        $stmt->bindValue(":Membre_id", $Membre_id);
         $stmt->execute();
         $count = $stmt->rowCount();
         if ($count > 0) {
             
             return $stmt->fetchAll();
         } else {
-            return "";
-            exit;
+            return null;
         }
 
     }
-    /**
-     * fonction pour ajouter une enchere dans les favoris
-     */
-    public static function addEncherfavorit($id, $userId) {
+    
+    public static function selectUserEncheresFavorit($id, $userId) {
         $db = static::getDB();
         $stmt = $db->prepare('SELECT * FROM Encherfavorit WHERE Enchere_id = :id AND Membre_id = :userId');
         $stmt->bindValue(':id', $id);
         $stmt->bindValue(':userId', $userId);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public static function delete($id, $userId) {
         $db = static::getDB();

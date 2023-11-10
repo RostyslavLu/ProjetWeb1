@@ -32,10 +32,11 @@ class Produit extends \Core\Controller
     public function show()
     {
         $id = $this->route_params['id'];
-
-        $images = \App\Models\Images::selectId($id);
-        $enchere = \App\Models\Enchere::selectProduitId($id);
         $produit = \App\Models\Produit::selectId($id);
+        $images = \App\Models\Images::selectId($id);
+        //$enchere = \App\Models\Enchere::selectProduitId($id);
+        $enchere = \App\Models\Enchere::selectId($produit['Enchere_id']);
+        
         $condition = \App\Models\Condition::selectId($produit['Condition_id']);
         $type = \App\Models\Type::selectId($produit['Type_id']);
 
@@ -63,10 +64,7 @@ class Produit extends \Core\Controller
         } else {
             // Gérer le cas où $offrePlusEleve ou $enchere ne sont pas des tableaux
         }
-        // echo "<pre>";
-        // print_r($offrePlusEleve);
-        // print_r($montantOffrePlusEleve);
-        // die();
+
         $produit['condition'] = $condition['type'];
         $produit['enchereId'] = $enchere['id'];
         $produit['date_debut'] = $enchere['date_debut'];

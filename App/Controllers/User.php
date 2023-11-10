@@ -30,19 +30,33 @@ class User extends \Core\Controller
     public function show()
     {
         $id = $this->route_params['id'];
-        //echo "<pre>";
+
         $user = \App\Models\User::selectId($id);
+        
         $encheres = \App\Models\Enchere::selectMembreId($id);
         
         $enchereFavorite = \App\Models\Encherfavorit::selectEncherfavorit($id);
-        //print_r($enchereFavorite);
-        
-        foreach ($encheres as $key => $value) {
-            $produit = \App\Models\Produit::selectId($value['Produit_id']);
-            $encheres[$key]['nom'] = $produit['nom'];
-
+        if (is_array($enchereFavorite) || is_object($enchereFavorite)) {
+        foreach ($enchereFavorite as $key => $value) {
+            $produit = \App\Models\Produit::selectEnchereId($value['Enchere_id']);
+            foreach ($produit as $key2 => $value2) {
+                $enchere = \App\Models\Enchere::selectId($value2['Enchere_id']);
+                $enchereFavorite[$key]['nom'] = $value2['nom'];
+                $enchereFavorite[$key]['Produit_id'] = $value2['id'];
+                $enchereFavorite[$key]['date_debut'] = $enchere['date_debut'];
+                $enchereFavorite[$key]['date_fin'] = $enchere['date_fin'];
+            }
         }
-        
+    }
+        foreach ($encheres as $key => $value) {
+            $produit = \App\Models\Produit::selectEnchereId($value['id']);
+            
+            foreach ($produit as $key2 => $value2) {
+                $encheres[$key]['nom'] = $value2['nom'];
+                $encheres[$key]['Produit_id'] = $value2['id'];
+            }
+        }
+   
         View::renderTemplate('User/show.html', [
             'id' => $id,
             'user' => $user,
@@ -182,6 +196,7 @@ class User extends \Core\Controller
             'Enchere_id' => $enchereId,
             'Membre_id' => $userId,
         ];
+    
         $liste = \App\Models\Encherfavorit::insert($data);
         
         header('Location: ../../enchere/index');
@@ -204,5 +219,17 @@ class User extends \Core\Controller
         session_destroy();
         header('Location: ../index');
         exit();
+    }
+    public function coupDeCoeur(){
+        $enchereId = $this->route_params['id'];
+        $userId = $_SESSION['user_id'];
+        $data = [
+            'Enchere_id' => $enchereId,
+            'Membre_id' => $userId,
+        ];
+    
+        $liste = \App\Models\User::insertCoupDeCoeur($enchereId, $userId);
+        
+        header('Location: ../../enchere/index');
     }
 }

@@ -3,7 +3,7 @@
 {% block title %}Page {{user.prenom}}&nbsp;{{user.nom}}{% endblock %}
 
 {% block body %}
-{% if session.user_id == id %}
+{% if session.user_id == id and session.privilege ==2 %}
     <section class="page-user">
         <aside>
             <h2>Données personel</h2>
@@ -53,21 +53,22 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Enchère ID</th>
                             <th>Timbre</th>
-                            <th>Prix plancher</th>
-                            <th></th>
-                            <th></th>
+                            <th>Date date_debut</th>
+                            <th>Date fin</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for enchere in enchereFavorite %}
                         <tr>
-                            <td><a href=""></a></td>
-                            <td><a href=""></a></td>
-                            <td><a href=""></a></td>
-                            <td><a href=""></a></td>
-                            <td><a href=""></a></td>
+                            <td>{{ enchere.Enchere_id}}</td>
+                            <td><a href="{{ url_racine }}produit/show/{{ enchere.Produit_id}}">{{ enchere.nom }}</a></td>
+                            <td>{{ enchere.date_debut }}</td>
+                            <td>{{ enchere.date_fin }}</td>
+                            <td><a href="{{ url_racine }}user/offreFavoriteDelete/{{ enchere.Enchere_id }}">&#10006;</a></td>
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
                 {% else %}
@@ -76,6 +77,13 @@
             </div>
         </article>
 
+    </section>
+    {% elseif session.privilege == 1 %}
+    <section>
+        <h2>Administration</h2>
+        <div>
+            
+        </div>
     </section>
     {% else %}
     <section class="access_denied">
@@ -86,5 +94,7 @@
         <a href="{{ url_racine }}">Retourner à la page d'accueil</a>
     </section>
     {% endif %}
+
+
 
 {% endblock %}

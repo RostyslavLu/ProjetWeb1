@@ -9,9 +9,9 @@
          <h1>Resultat de la recherche</h1>
          <ol start="1" type="1">
             {% for resultat in resultats %}
-            <li><a href="{{ url_racine }}produit/show/{{ resultat.id }}">{{ resultat.nom }}</a></li>
+            <li><a href="{{ url_racine }}produit/show/{{ resultat.id }}">{{ resultat.nom }}</a>&nbsp;Prix:&nbsp;{{resultat.prix_plancher}}&nbsp;$&nbsp;Date fin:&nbsp;{{resultat.date_fin}}</li>
             {% endfor %}    
-        </ul>
+         </ol>
         <small>{{countListe}}</small>
         </section>
     </main>

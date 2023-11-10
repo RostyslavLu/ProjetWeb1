@@ -3,13 +3,44 @@
     flex-wrap: wrap;
     padding: var(--space-lg);
     gap: var(--space-lg);
+    min-height: 50vh;
+}
+.page-user h2 {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-lg);
+}
+
+.page-user th {
+    font-weight: 700;
+    text-align: left;
+    padding: var(--space-xs);
 }
 
 .page-user > aside {
     flex-basis: 30ch;
     flex-grow: 1;
 }
+
+.page-user  li {
+    list-style: inside all;
+    margin-top: var(--space-s);
+    padding: var(--space-s);
+
+}
 .page-user article {
     flex-basis: 60ch;
     flex-grow: 2;
+}
+.page-user table {
+    font-weight: 500;
+}
+.page-user table td {
+    padding: var(--space-xs);
+    text-align: center;
+}
+.page-user a:not(.bouton){
+    color: var(--secondary-color-dark);
+    text-decoration: none;
+    font-weight: 700;
 }

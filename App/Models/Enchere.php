@@ -53,20 +53,20 @@ class Enchere extends \Core\Model
             exit;
         }
     }
-    public static function selectProduitId($value, $field ='Produit_id') {
-        $db = static::getDB();
-        $sql = "SELECT * FROM Enchere WHERE Produit_id = :Produit_id";
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(":Produit_id", $value);
-        $stmt->execute();
-        $count = $stmt->rowCount();
-        if ($count == 1) {
-            return $stmt->fetch();
-        } else {
-            header("location:./404.html");
-            exit;
-        }
-    }
+    // public static function selectProduitId($value, $field ='Produit_id') {
+    //     $db = static::getDB();
+    //     $sql = "SELECT * FROM Enchere WHERE Produit_id = :Produit_id";
+    //     $stmt = $db->prepare($sql);
+    //     $stmt->bindValue(":Produit_id", $value);
+    //     $stmt->execute();
+    //     $count = $stmt->rowCount();
+    //     if ($count == 1) {
+    //         return $stmt->fetch();
+    //     } else {
+    //         header("location:./404.html");
+    //         exit;
+    //     }
+    // }
     public static function selectMembreId($value, $field ='Membre_id') {
         $db = static::getDB();
         $sql = "SELECT * FROM Enchere WHERE Membre_id = :Membre_id";
