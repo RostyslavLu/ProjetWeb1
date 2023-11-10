@@ -5,18 +5,20 @@
     justify-content: space-between;
 }
 
-.entete-timbre > a, .timbre-meme-categorie > div > a {
+.entete-timbre>a,
+.timbre-meme-categorie>div>a {
     text-decoration: none;
     color: var(--secondary-color-dark);
     font-size: 18px;
     font-weight: 700;
 }
 
-.entete-timbre > a:hover, .timbre-meme-categorie > div > a:hover {
+.entete-timbre>a:hover,
+.timbre-meme-categorie>div>a:hover {
     color: var(--main-color-dark);
 }
 
-.timbre-titre > p {
+.timbre-titre>p {
     margin-top: var(--space-xl);
 }
 
@@ -37,7 +39,7 @@
     gap: var(--space-s);
 }
 
-.timbre-image > div {
+.timbre-image>div {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     flex-basis: 10ch;
@@ -46,7 +48,7 @@
     align-items: center;
 }
 
-.timbre-image > picture > img {
+.timbre-image>picture>img {
     object-fit: cover;
     max-width: 400px;
     max-height: max-content;
@@ -54,9 +56,9 @@
     border-radius: var(--space-s);
 }
 
-.timbre-images > img {
+.timbre-images>img {
     max-height: 100px;
-    
+
 }
 
 .timbre-info {
@@ -65,27 +67,28 @@
     gap: var(--space-xl);
 }
 
-.timbre-info > header > * {
+.timbre-info>header>* {
     margin-top: var(--space-lg);
 }
 
-.timbre-info > div > * {
+.timbre-info>div>* {
     margin-top: var(--space-s);
-} 
+}
 
-.timbre-miser > button {
+.timbre-miser>button {
     color: var(--accent-color-light);
     background-color: var(--secondary-color-dark);
 }
 
-.timbre-miser > input, .timbre-miser > button {
+.timbre-miser>input,
+.timbre-miser>button {
     font-size: var(--text-xs);
     padding: var(--space-xs);
     border-radius: 5px;
     border: 1px solid var(--secondary-color-dark);
 }
 
-.timbre-meme-categorie > div {
+.timbre-meme-categorie>div {
     margin-top: var(--space-xl);
 }
 
@@ -99,24 +102,35 @@
     gap: var(--space-xxl);
     margin-top: var(--space-xxl);
 }
+
 .formulaire-timbre {
     display: flex;
-    flex-direction: column;  
+    flex-direction: column;
     justify-content: center;
     min-width: 400px;
     padding: var(--space-lg);
     border: 2px solid var(--main-color-medium);
     border-radius: 5px;
 }
-.formulaire-timbre > div {
+
+.formulaire-timbre>div {
     display: flex;
     flex-direction: column;
     margin-bottom: var(--space-md);
 }
+
 .formulaire-timbre label {
     margin-bottom: var(--space-xs);
 }
 
+.glass {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: var(--space-md);
+    display: none;
+
+}
 @media (max-width: 1200px) {
     .timbre-details {
         flex-direction: column;

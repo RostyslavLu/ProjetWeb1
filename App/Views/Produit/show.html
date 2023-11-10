@@ -16,8 +16,12 @@
 
     <section class="timbre-details">
         <article class="timbre-image">
-            <picture>
-                <img src="{{ url_racine }}assets/img/upload/{{ produit.image_principale }}" alt="timbre">
+
+            <picture >
+                <div class="glass">
+
+                </div>
+                <img class="magnify" src="{{ url_racine }}assets/img/upload/{{ produit.image_principale }}" alt="timbre" >
             </picture>
             <div class="timbre-images">
                 {% for image in images %}
