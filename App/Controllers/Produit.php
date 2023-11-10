@@ -28,13 +28,14 @@ class Produit extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
-
+    /**
+     * fonction pour afficher le détail d'un produit
+     */
     public function show()
     {
         $id = $this->route_params['id'];
         $produit = \App\Models\Produit::selectId($id);
         $images = \App\Models\Images::selectId($id);
-        //$enchere = \App\Models\Enchere::selectProduitId($id);
         $enchere = \App\Models\Enchere::selectId($produit['Enchere_id']);
         
         $condition = \App\Models\Condition::selectId($produit['Condition_id']);
@@ -83,7 +84,9 @@ class Produit extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
-
+    /**
+     * le formulaire de création d'un produit
+     */
     public function create()
     {
         $liste = \App\Models\Produit::getAll();
@@ -96,6 +99,9 @@ class Produit extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
+    /**
+     * fonction pour enregistrer un produit dans la base de données
+     */
     public function store()
     {
         if ($_SERVER["REQUEST_METHOD"] != "POST") {
@@ -180,12 +186,16 @@ class Produit extends \Core\Controller
             ]);
         }
     }
+    /**
+     * fonction pour mettre à jour un produit
+     */
     public function update()
     {
 
         $id = $this->route_params['id'];
         $produit = \App\Models\Produit::selectId($id);
         $condition = \App\Models\Condition::getAll();
+
         View::renderTemplate('Produit/update.html', [
             'id' => $id,
             'produit' => $produit,
@@ -194,6 +204,9 @@ class Produit extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
+    /**
+     * fonction pour effacer un produit
+     */
     public function delete()
     {
         $id = $this->route_params['id'];

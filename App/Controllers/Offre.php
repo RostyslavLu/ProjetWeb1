@@ -24,6 +24,9 @@ class Offre extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
+    /**
+     * fonction pour enregistrer une offre dans la base de données
+     */
     public function store()
     {
         $Produit_id = $this->route_params;

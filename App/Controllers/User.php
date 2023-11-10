@@ -27,7 +27,9 @@ class User extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
-
+    /**
+     * fonction pour afficher le détail d'un utilisateur
+     */
     public function show()
     {
         $id = $this->route_params['id'];
@@ -47,9 +49,7 @@ class User extends \Core\Controller
                 $tousEncheres[$key]['Produit_id'] = $value2['id'];
             }
         }
-        //echo "<pre>";
-        //print_r($tousEncheres); 
-        //die();
+
         $encheres = \App\Models\Enchere::selectMembreId($id);
 
         $enchereFavorite = \App\Models\Encherfavorit::selectEncherfavorit($id);
@@ -84,7 +84,9 @@ class User extends \Core\Controller
             'enchereFavorite' => $enchereFavorite
         ]);
     }
-
+    /**
+     *  le formulaire de création d'un utilisateur
+     */
     public function create()
     {
         $liste = \App\Models\User::getAll();
@@ -97,7 +99,7 @@ class User extends \Core\Controller
     }
 
     /**
-     * fonction pour enregistrer un utilisateur
+     * fonction pour enregistrer un utilisateur dans la base de données
      */
 
     public function store()
@@ -156,6 +158,9 @@ class User extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
+    /**
+     * formulaire pour se connecter
+     */
 
     public function login()
     {
@@ -165,7 +170,9 @@ class User extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
-
+    /**
+     * fonction verifier si l'utilisateur existe dans la base de données et si le mot de passe est valide
+     */
     public function auth()
     {
         if ($_SERVER["REQUEST_METHOD"] != "POST") {
@@ -203,7 +210,9 @@ class User extends \Core\Controller
             }
         }
     }
-
+    /**
+     * ajouter une enchère à la liste des enchères favorites
+     */
     public function offreFavorite()
     {
         $enchereId = $this->route_params['id'];
@@ -217,6 +226,9 @@ class User extends \Core\Controller
 
         header('Location: ../../enchere/index');
     }
+    /**
+     * supprimer une enchère de la liste des enchères favorites
+     */
     public function offreFavoriteDelete()
     {
         $enchereId = $this->route_params['id'];

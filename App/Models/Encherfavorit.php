@@ -40,7 +40,7 @@ class Encherfavorit extends \Core\Model
         return $db->lastInsertId();
     }
     /**
-     * fonction pour selectionner un timbre par id
+     * fonction pour recouperer les enchères favorites d'un utilisateur
      */
     public static function selectEncherfavorit($Membre_id) {
         $db = static::getDB();
@@ -57,7 +57,9 @@ class Encherfavorit extends \Core\Model
         }
 
     }
-    
+    /**
+     * fonction pour recouperer les enchères favorites d'un utilisateur
+     */
     public static function selectUserEncheresFavorit($id, $userId) {
         $db = static::getDB();
         $stmt = $db->prepare('SELECT * FROM Encherfavorit WHERE Enchere_id = :id AND Membre_id = :userId');
@@ -66,6 +68,9 @@ class Encherfavorit extends \Core\Model
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    /**
+     * fonction pour supprimer une enchère des favoris
+     */
     public static function delete($id, $userId) {
         $db = static::getDB();
         $stmt = $db->prepare('DELETE FROM Encherfavorit WHERE Enchere_id = :id AND Membre_id = :userId');

@@ -26,7 +26,7 @@ class Produit extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     /**
-     * fonction pour inserer un timbre
+     * fonction pour enregistrer timbre dans la base de données
      */
     public static function insert($data) {
         $db = static::getDB();
@@ -59,7 +59,9 @@ class Produit extends \Core\Model
             exit;
         }
     }
-
+    /**
+     * fonction pour selectionner un timbre par id d'enchère
+     */
     public static function selectEnchereId($value, $field ='Enchere_id') {
         $db = static::getDB();
         $sql = "SELECT * FROM Produit WHERE Enchere_id = :Enchere_id";
@@ -73,7 +75,7 @@ class Produit extends \Core\Model
     }
 
     /**
-     * fonction pour effacer un timbre
+     * fonction pour effacer un timbre de la base de données par id
      */
     public static function delete($value){
         $db = static::getDB();
@@ -94,6 +96,9 @@ class Produit extends \Core\Model
 
         return $stmt->fetchAll();
     }
+    /**
+     * fonction pour rechercher un timbre par les critères
+     */
     public static function searchComplex($condition, $type, $anneMin, $anneMax, $tirage, $certification){
         
         $db = static::getDB();

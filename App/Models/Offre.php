@@ -25,6 +25,9 @@ class Offre extends \Core\Model
         $stmt = $db->query('SELECT * FROM enchere_stempee.Offre');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    /**
+     * fonction pour enregistrer offre dans la base de données
+     */
     public static function insert($data) {
         $db = static::getDB();
         
@@ -39,7 +42,9 @@ class Offre extends \Core\Model
         $stmt->execute();
         return $db->lastInsertId();
     }
-
+    /**
+     * fonction pour recouperer les offres d'une enchère
+     */
     public static function selectOffres($value, $field ='Enchere_id') {
         $db = static::getDB();
         $sql = "SELECT * FROM enchere_stempee.Offre WHERE Enchere_id = :Enchere_id";
@@ -48,6 +53,9 @@ class Offre extends \Core\Model
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    /**
+     * fonction pour recouperer l'offre la plus élevée d'une enchère
+     */
     public static function selectOffrePlusEleve($value, $field ='Enchere_id') {
         $db = static::getDB();
         $sql = "SELECT * FROM enchere_stempee.Offre WHERE Enchere_id = :Enchere_id ORDER BY montant DESC LIMIT 1";

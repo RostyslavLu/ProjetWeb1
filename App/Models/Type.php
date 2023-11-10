@@ -25,6 +25,9 @@ class Type extends \Core\Model
         $stmt = $db->query('SELECT id, type_nom FROM enchere_stempee.type');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    /**
+     * recouperer un type par son id
+     */
     public static function selectId($value, $field ='id') {
         $db = static::getDB();
         $sql = "SELECT type_nom FROM enchere_stempee.Type WHERE id = :id";

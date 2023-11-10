@@ -25,6 +25,9 @@ class User extends \Core\Model
         $stmt = $db->query('SELECT id, nom, prenom, courriel FROM Membre');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    /**
+     * fonction pour enregistrer un utilisateur dans la base de données
+     */
     public static function insert($data) {
         $db = static::getDB();
         
@@ -38,6 +41,9 @@ class User extends \Core\Model
 
         $stmt->execute();
     }
+    /**
+     * fonction pour selectionner un utilisateur par id
+     */
     public static function selectId($value, $field ='id') {
         $db = static::getDB();
         $sql = "SELECT * FROM membre WHERE id = :id";

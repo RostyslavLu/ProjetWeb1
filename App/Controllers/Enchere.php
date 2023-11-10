@@ -79,6 +79,9 @@ class Enchere extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
+    /**
+     * fonction pour rechercher un timbre par son nom
+     */
     public function search () {
         $search = $_GET['rechercher'];
         if ($search == "") {
@@ -107,6 +110,10 @@ class Enchere extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
+    /**
+     * filtre pour rechercher un timbre
+     */
+    
     public function searchComplex() {
         echo "<pre>";
         print_r($_POST);
@@ -135,6 +142,9 @@ class Enchere extends \Core\Controller
             $countListe = "Aucun résultat pour votre recherche : ".$condition." entre ".$prixMin." et ".$prixMax."";
         }
     }
+    /**
+     * fonction pour ajouter une coup de coeur
+     */
     public function coupDeCoeur()
     {
 

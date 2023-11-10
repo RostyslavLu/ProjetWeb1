@@ -25,6 +25,9 @@ class Condition extends \Core\Model
         $stmt = $db->query('SELECT id, type FROM enchere_stempee.condition');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    /**
+     * recouperer une condition par son id
+     */
     public static function selectId($value, $field ='id') {
         $db = static::getDB();
         $sql = "SELECT type FROM enchere_stempee.Condition WHERE id = :id";
