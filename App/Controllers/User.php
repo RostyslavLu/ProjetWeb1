@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use \Core;
+
 /**
  * Home controller
  *
@@ -32,35 +33,52 @@ class User extends \Core\Controller
         $id = $this->route_params['id'];
 
         $user = \App\Models\User::selectId($id);
-        
-        $encheres = \App\Models\Enchere::selectMembreId($id);
-        
-        $enchereFavorite = \App\Models\Encherfavorit::selectEncherfavorit($id);
-        if (is_array($enchereFavorite) || is_object($enchereFavorite)) {
-        foreach ($enchereFavorite as $key => $value) {
-            $produit = \App\Models\Produit::selectEnchereId($value['Enchere_id']);
+        $tousEncheres = \App\Models\Enchere::getAll();
+        foreach ($tousEncheres as $key => $value) {
+            $produit = \App\Models\Produit::selectEnchereId($value['id']);
+            print_r($value['coup_de_coer']);
+            if ($value['coup_de_coer'] == 1) {
+                $tousEncheres[$key]['coup_de_coer'] = "Oui";
+            } else {
+                $tousEncheres[$key]['coup_de_coer'] = "Non";
+            }
             foreach ($produit as $key2 => $value2) {
-                $enchere = \App\Models\Enchere::selectId($value2['Enchere_id']);
-                $enchereFavorite[$key]['nom'] = $value2['nom'];
-                $enchereFavorite[$key]['Produit_id'] = $value2['id'];
-                $enchereFavorite[$key]['date_debut'] = $enchere['date_debut'];
-                $enchereFavorite[$key]['date_fin'] = $enchere['date_fin'];
+                $tousEncheres[$key]['nom'] = $value2['nom'];
+                $tousEncheres[$key]['Produit_id'] = $value2['id'];
             }
         }
-    }
+        //echo "<pre>";
+        //print_r($tousEncheres); 
+        //die();
+        $encheres = \App\Models\Enchere::selectMembreId($id);
+
+        $enchereFavorite = \App\Models\Encherfavorit::selectEncherfavorit($id);
+        if (is_array($enchereFavorite) || is_object($enchereFavorite)) {
+            foreach ($enchereFavorite as $key => $value) {
+                $produit = \App\Models\Produit::selectEnchereId($value['Enchere_id']);
+                foreach ($produit as $key2 => $value2) {
+                    $enchere = \App\Models\Enchere::selectId($value2['Enchere_id']);
+                    $enchereFavorite[$key]['nom'] = $value2['nom'];
+                    $enchereFavorite[$key]['Produit_id'] = $value2['id'];
+                    $enchereFavorite[$key]['date_debut'] = $enchere['date_debut'];
+                    $enchereFavorite[$key]['date_fin'] = $enchere['date_fin'];
+                }
+            }
+        }
         foreach ($encheres as $key => $value) {
             $produit = \App\Models\Produit::selectEnchereId($value['id']);
-            
+
             foreach ($produit as $key2 => $value2) {
                 $encheres[$key]['nom'] = $value2['nom'];
                 $encheres[$key]['Produit_id'] = $value2['id'];
             }
         }
-   
+
         View::renderTemplate('User/show.html', [
             'id' => $id,
             'user' => $user,
             'encheres' => $encheres,
+            'tousEncheres' => $tousEncheres,
             'url_racine' => $this->url_racine,
             'session' => $_SESSION,
             'enchereFavorite' => $enchereFavorite
@@ -84,7 +102,7 @@ class User extends \Core\Controller
 
     public function store()
     {
-        if ($_SERVER["REQUEST_METHOD"]!="POST") {
+        if ($_SERVER["REQUEST_METHOD"] != "POST") {
             View::renderTemplate('User/create.html', [
                 'url_racine' => $this->url_racine,
                 'session' => $_SESSION
@@ -98,8 +116,8 @@ class User extends \Core\Controller
         $validation->name('prenom')->value($prenom)->pattern('alpha')->min(2)->max(25)->required();
         $validation->name('courriel')->value($courriel)->pattern('email')->min(10)->max(50)->required();
         $validation->name('mot_de_passe')->value($mot_de_passe)->pattern('alphanum')->min(8)->max(25)->required();
-        
-        
+
+
         if ($validation->isSuccess()) {
             $options = [
                 'cost' => 12,
@@ -120,7 +138,6 @@ class User extends \Core\Controller
                 'session' => $_SESSION
             ]);
         }
-        
     }
     /**
      * fonction pour mise à jour d'un utilisateur
@@ -139,7 +156,7 @@ class User extends \Core\Controller
             'session' => $_SESSION
         ]);
     }
- 
+
     public function login()
     {
 
@@ -151,7 +168,7 @@ class User extends \Core\Controller
 
     public function auth()
     {
-        if ($_SERVER["REQUEST_METHOD"]!="POST") {
+        if ($_SERVER["REQUEST_METHOD"] != "POST") {
             View::renderTemplate('User/login.html', [
                 'url_racine' => $this->url_racine,
                 'session' => $_SESSION
@@ -183,9 +200,8 @@ class User extends \Core\Controller
                     'url_racine' => $this->url_racine,
                     'session' => $_SESSION
                 ]);
-
             }
-        } 
+        }
     }
 
     public function offreFavorite()
@@ -196,9 +212,9 @@ class User extends \Core\Controller
             'Enchere_id' => $enchereId,
             'Membre_id' => $userId,
         ];
-    
+
         $liste = \App\Models\Encherfavorit::insert($data);
-        
+
         header('Location: ../../enchere/index');
     }
     public function offreFavoriteDelete()
@@ -206,7 +222,7 @@ class User extends \Core\Controller
         $enchereId = $this->route_params['id'];
         $userId = $_SESSION['user_id'];
         $liste = \App\Models\Encherfavorit::delete($enchereId, $userId);
-        
+
         header('Location: ../../enchere/index');
     }
 
@@ -220,16 +236,5 @@ class User extends \Core\Controller
         header('Location: ../index');
         exit();
     }
-    public function coupDeCoeur(){
-        $enchereId = $this->route_params['id'];
-        $userId = $_SESSION['user_id'];
-        $data = [
-            'Enchere_id' => $enchereId,
-            'Membre_id' => $userId,
-        ];
-    
-        $liste = \App\Models\User::insertCoupDeCoeur($enchereId, $userId);
-        
-        header('Location: ../../enchere/index');
-    }
+
 }

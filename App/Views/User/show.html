@@ -79,11 +79,27 @@
 
     </section>
     {% elseif session.privilege == 1 %}
-    <section>
+    <section class="page-admin">
         <h2>Administration</h2>
-        <div>
-            
-        </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timbre</th>
+                        <th>Prix</th>
+                        <th>Date fin</th>
+                        <th>Coups de coeur</th>
+                    </tr>
+                </thead>
+            {% for enchere in tousEncheres %}
+                <tr>
+                    <td><a href="{{ url_racine }}produit/show/{{ enchere.Produit_id }}">{{ enchere.nom }}</a></td>
+                    <td>{{ enchere.prix_plancher }}</td>
+                    <td>{{ enchere.date_fin }}</td>
+                    <td><a href="{{ url_racine }}enchere/coupDeCoeur/{{ enchere.id }}">{{ enchere.coup_de_coer }}</a></td>
+                </tr>
+
+            {% endfor %}
+        </table>
     </section>
     {% else %}
     <section class="access_denied">

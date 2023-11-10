@@ -89,4 +89,15 @@ class Enchere extends \Core\Model
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    public static function insertCoupDeCoeur($data) {
+        $db = static::getDB();
+        $Membre_id = $data['Membre_id'];
+        $id = $data['Enchere_id'];
+
+        $sql = "UPDATE Enchere SET coup_de_coer = 1 WHERE Membre_id = :Membre_id AND id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":Membre_id", $Membre_id);
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
+    }
 }

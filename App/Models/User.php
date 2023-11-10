@@ -74,13 +74,6 @@ class User extends \Core\Model
             exit;
         }
     }
-    public static function insertCoupDeCoeur($Membre_id, $Enchere_id){
-        $db = static::getDB();
-        $sql = "INSERT INTO Enchere coup_de_coer VALUES 1 WHERE Membre_id = :Membre_id AND Enchere_id = :Enchere_id";
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(":Membre_id", $Membre_id);
-        $stmt->bindValue(":Enchere_id", $Enchere_id);
-        $stmt->execute();
-    }
+
 
 }

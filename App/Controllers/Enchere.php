@@ -72,10 +72,6 @@ class Enchere extends \Core\Controller
             $listeProduit[$key]['date_debut'] = $enchere['date_debut'];
             $listeProduit[$key]['date_fin'] = $enchere['date_fin'];
         }
-        // echo "<pre>";
-        
-        // print_r($listeProduit);
-        // die();
 
         View::renderTemplate('Enchere/index.html',  [
             'encheres' => $listeProduit,
@@ -138,6 +134,20 @@ class Enchere extends \Core\Controller
         } else {
             $countListe = "Aucun résultat pour votre recherche : ".$condition." entre ".$prixMin." et ".$prixMax."";
         }
+    }
+    public function coupDeCoeur()
+    {
+
+        $enchereId = $this->route_params['id'];
+        $userId = \App\Models\Enchere::selectId($enchereId)['Membre_id'];
+        $data = [
+            'Enchere_id' => $enchereId,
+            'Membre_id' => $userId,
+        ];
+
+        $liste = \App\Models\Enchere::insertCoupDeCoeur($data);
+
+        header('Location: ../../enchere/index');
     }
 
 }
