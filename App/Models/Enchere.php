@@ -25,6 +25,9 @@ class Enchere extends \Core\Model
         $stmt = $db->query('SELECT * FROM Enchere');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    /**
+     * enregistrer une enchère dans la base de données
+     */
     public static function insert($data) {
         $db = static::getDB();
         
@@ -39,6 +42,9 @@ class Enchere extends \Core\Model
         $stmt->execute();
         return $db->lastInsertId();
     }
+    /**
+     * recouperer une enchère par son id
+     */
     public static function selectId($value, $field ='id') {
         $db = static::getDB();
         $sql = "SELECT * FROM Enchere WHERE id = :id";
@@ -53,7 +59,9 @@ class Enchere extends \Core\Model
             exit;
         }
     }
-
+    /**
+     * recouperer les enchères d'un membre
+     */
     public static function selectMembreId($value, $field ='Membre_id') {
         $db = static::getDB();
         $sql = "SELECT * FROM Enchere WHERE Membre_id = :Membre_id";
@@ -62,6 +70,9 @@ class Enchere extends \Core\Model
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    /**
+     * recouperer les enchères archivées
+     */
     public static function selectEncheresArchive() {
         $db = static::getDB();
         $sql = "SELECT * FROM Enchere WHERE date_fin < NOW()";
@@ -69,6 +80,10 @@ class Enchere extends \Core\Model
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    /**
+     *  recouperer les enchères actuelles
+     */
+
     public static function selectEncheresActuel() {
         $db = static::getDB();
         $sql = "SELECT * FROM Enchere WHERE date_fin > NOW()";
@@ -76,6 +91,9 @@ class Enchere extends \Core\Model
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    /**
+     * enregistrer un coup de coeur dans la base de données
+     */
     public static function insertCoupDeCoeur($data) {
         $db = static::getDB();
         $Membre_id = $data['Membre_id'];
