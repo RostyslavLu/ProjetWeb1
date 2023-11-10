@@ -38,7 +38,7 @@ class User extends \Core\Controller
         $tousEncheres = \App\Models\Enchere::getAll();
         foreach ($tousEncheres as $key => $value) {
             $produit = \App\Models\Produit::selectEnchereId($value['id']);
-            print_r($value['coup_de_coer']);
+            
             if ($value['coup_de_coer'] == 1) {
                 $tousEncheres[$key]['coup_de_coer'] = "Oui";
             } else {

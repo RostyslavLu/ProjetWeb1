@@ -23,7 +23,7 @@ class Enchere extends \Core\Controller
     {
         $listeEncheres = \App\Models\Enchere::getAll();
         $listeProduit = \App\Models\Produit::getAll();
-  
+
         foreach ($listeProduit as $key => $value) {
             //$produit = \App\Models\Produit::selectId($value['Produit_id']);
 
@@ -46,18 +46,16 @@ class Enchere extends \Core\Controller
             } else {
                 $montantOffrePlusEleve = $offrePlusEleve['montant'];
             }
-        
+
             if (isset($_SESSION['user_id'])) {
-               
+
                 $echereUserFavorite = \App\Models\Encherfavorit::selectUserEncheresFavorit($value['Enchere_id'], $_SESSION['user_id']);
-                
+
                 if ($echereUserFavorite != null) {
                     $echereUserFavorite = 1;
                 } else {
                     $echereUserFavorite = 0;
                 }
-
-
             } else {
 
                 $echereUserFavorite = null;
@@ -82,15 +80,16 @@ class Enchere extends \Core\Controller
     /**
      * fonction pour rechercher un timbre par son nom
      */
-    public function search () {
+    public function search()
+    {
         $search = $_GET['rechercher'];
         if ($search == "") {
-            header('Location: '.$this->url_racine);
+            header('Location: ' . $this->url_racine);
         }
         $liste = \App\Models\Produit::search($search);
 
 
-        foreach($liste as $key => $value){
+        foreach ($liste as $key => $value) {
             $enchere = \App\Models\Enchere::selectId($value['Enchere_id']);
             $liste[$key]['date_debut'] = $enchere['date_debut'];
             $liste[$key]['date_fin'] = $enchere['date_fin'];
@@ -98,10 +97,10 @@ class Enchere extends \Core\Controller
         }
         $countListe = count($liste);
         if ($countListe > 0) {
-            $countListe = $countListe." résultat(s) pour votre recherche : ".$search;
+            $countListe = $countListe . " résultat(s) pour votre recherche : " . $search;
         } else {
-            $countListe = "Aucun résultat pour votre recherche : ".$search."";
-        } 
+            $countListe = "Aucun résultat pour votre recherche : " . $search . "";
+        }
 
         View::renderTemplate('Enchere/search.html',  [
             'resultats' => $liste,
@@ -113,11 +112,12 @@ class Enchere extends \Core\Controller
     /**
      * filtre pour rechercher un timbre
      */
-    
-    public function searchComplex() {
+
+    public function searchComplex()
+    {
         echo "<pre>";
         print_r($_POST);
-        
+
         $condition = $_POST['condition'];
         $prixMin = $_POST['prixMin'];
         $prixMax = $_POST['prixMax'];
@@ -128,18 +128,18 @@ class Enchere extends \Core\Controller
         $certification = $_POST['certification'];
 
         $liste = \App\Models\Produit::searchComplex($condition, $type, $anneMin, $anneMax, $tirage, $certification);
-        foreach($liste as $key => $value){
+        foreach ($liste as $key => $value) {
             $enchere = \App\Models\Enchere::selectId($value['Enchere_id']);
-  
+
             $liste[$key]['prix_plancher'] = $enchere['prix_plancher'];
         }
         print_r($liste);
         die();
         $countListe = count($liste);
         if ($countListe > 0) {
-            $countListe = $countListe." résultat(s) pour votre recherche : ".$condition." entre ".$prixMin." et ".$prixMax."";
+            $countListe = $countListe . " résultat(s) pour votre recherche : " . $condition . " entre " . $prixMin . " et " . $prixMax . "";
         } else {
-            $countListe = "Aucun résultat pour votre recherche : ".$condition." entre ".$prixMin." et ".$prixMax."";
+            $countListe = "Aucun résultat pour votre recherche : " . $condition . " entre " . $prixMin . " et " . $prixMax . "";
         }
     }
     /**
@@ -159,5 +159,128 @@ class Enchere extends \Core\Controller
 
         header('Location: ../../enchere/index');
     }
+    /**
+     * fonction pour afficher les enchères actuelles
+     */
+    public function encheresActuel()
+    {
+        $listeEncheres = \App\Models\Enchere::selectEncheresActuel();
 
+        $listeProduit = \App\Models\Produit::getAll();
+
+        foreach ($listeProduit as $key => $value) {
+            //$produit = \App\Models\Produit::selectId($value['Produit_id']);
+
+            $enchere = \App\Models\Enchere::selectId($value['Enchere_id']);
+            $offres = \App\Models\Offre::selectOffres($enchere['id']);
+            $offresCount = count($offres);
+
+
+            if ($offresCount > 0) {
+                $offresCount = $offresCount . " offre(s)";
+            } else {
+                $offresCount = "Aucune offre pour cette enchère";
+            }
+
+            //montant de l'offre la plus élevée
+            $offrePlusEleve = \App\Models\Offre::selectOffrePlusEleve($enchere['id']);
+
+            if ($offrePlusEleve == null) {
+                $montantOffrePlusEleve = $enchere['prix_plancher'];
+            } else {
+                $montantOffrePlusEleve = $offrePlusEleve['montant'];
+            }
+
+            if (isset($_SESSION['user_id'])) {
+
+                $echereUserFavorite = \App\Models\Encherfavorit::selectUserEncheresFavorit($value['Enchere_id'], $_SESSION['user_id']);
+
+                if ($echereUserFavorite != null) {
+                    $echereUserFavorite = 1;
+                } else {
+                    $echereUserFavorite = 0;
+                }
+            } else {
+
+                $echereUserFavorite = null;
+            }
+
+
+            $listeProduit[$key]['offresCount'] = $offresCount;
+            $listeProduit[$key]['enchereUserFavorite'] = $echereUserFavorite;
+            $listeProduit[$key]['prix_plancher'] = $montantOffrePlusEleve;
+            $listeProduit[$key]['Membre_id'] = $enchere['Membre_id'];
+            $listeProduit[$key]['Produit_id'] = $value['id'];
+            $listeProduit[$key]['date_debut'] = $enchere['date_debut'];
+            $listeProduit[$key]['date_fin'] = $enchere['date_fin'];
+        }
+
+        View::renderTemplate('Enchere/index.html',  [
+            'encheres' => $listeProduit,
+            'url_racine' => $this->url_racine,
+            'session' => $_SESSION
+        ]);
+    }
+    /**
+     * fonction pour afficher les enchères archivées
+     */
+    public function encheresArchive()
+    {
+        $listeEncheres = \App\Models\Enchere::selectEncheresArchive();
+
+        $listeProduit = \App\Models\Produit::getAll();
+
+        foreach ($listeProduit as $key => $value) {
+            //$produit = \App\Models\Produit::selectId($value['Produit_id']);
+
+            $enchere = \App\Models\Enchere::selectId($value['Enchere_id']);
+            $offres = \App\Models\Offre::selectOffres($enchere['id']);
+            $offresCount = count($offres);
+
+
+            if ($offresCount > 0) {
+                $offresCount = $offresCount . " offre(s)";
+            } else {
+                $offresCount = "Aucune offre pour cette enchère";
+            }
+
+            //montant de l'offre la plus élevée
+            $offrePlusEleve = \App\Models\Offre::selectOffrePlusEleve($enchere['id']);
+
+            if ($offrePlusEleve == null) {
+                $montantOffrePlusEleve = $enchere['prix_plancher'];
+            } else {
+                $montantOffrePlusEleve = $offrePlusEleve['montant'];
+            }
+
+            if (isset($_SESSION['user_id'])) {
+
+                $echereUserFavorite = \App\Models\Encherfavorit::selectUserEncheresFavorit($value['Enchere_id'], $_SESSION['user_id']);
+
+                if ($echereUserFavorite != null) {
+                    $echereUserFavorite = 1;
+                } else {
+                    $echereUserFavorite = 0;
+                }
+            } else {
+
+                $echereUserFavorite = null;
+            }
+
+
+            $listeProduit[$key]['offresCount'] = $offresCount;
+            $listeProduit[$key]['enchereUserFavorite'] = $echereUserFavorite;
+            $listeProduit[$key]['prix_plancher'] = $montantOffrePlusEleve;
+            $listeProduit[$key]['Membre_id'] = $enchere['Membre_id'];
+            $listeProduit[$key]['Produit_id'] = $value['id'];
+            $listeProduit[$key]['date_debut'] = $enchere['date_debut'];
+            $listeProduit[$key]['date_fin'] = $enchere['date_fin'];
+        }
+
+        View::renderTemplate('Enchere/index.html',  [
+            'encheres' => $listeProduit,
+            'url_racine' => $this->url_racine,
+            'session' => $_SESSION
+        ]);
+    }
 }
