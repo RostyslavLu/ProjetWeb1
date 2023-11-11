@@ -5,7 +5,7 @@
     gap: var(--space-lg);
     min-height: 50vh;
 }
-.page-user h2 {
+.page-user h2, .page-admin h2 {
     font-size: var(--font-size-xl);
     font-weight: 700;
     margin-bottom: var(--space-lg);
@@ -32,10 +32,10 @@
     flex-basis: 60ch;
     flex-grow: 2;
 }
-.page-user table {
+.page-user table, .page-admin table {
     font-weight: 500;
 }
-.page-user table td {
+.page-user table td, .page-admin table td {
     padding: var(--space-xs);
     text-align: center;
 }
@@ -43,4 +43,16 @@
     color: var(--secondary-color-dark);
     text-decoration: none;
     font-weight: 700;
+}
+
+.page-admin a:not(.bouton){
+    color: var(--secondary-color-dark);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.page-admin {
+    padding: var(--space-lg);
+    gap: var(--space-lg);
+    min-height: 50vh;
 }

@@ -95,7 +95,11 @@
                     <td><a href="{{ url_racine }}produit/show/{{ enchere.Produit_id }}">{{ enchere.nom }}</a></td>
                     <td>{{ enchere.prix_plancher }}</td>
                     <td>{{ enchere.date_fin }}</td>
+                    {% if enchere.coup_cond == Oui %}
                     <td><a href="{{ url_racine }}enchere/coupDeCoeur/{{ enchere.id }}">{{ enchere.coup_de_coer }}</a></td>
+                    {% else %}
+                    <td><a href="{{ url_racine }}enchere/deleteCoupDeCoeur/{{ enchere.id }}">{{ enchere.coup_de_coer }}</a></td>
+                    {% endif %}
                 </tr>
 
             {% endfor %}

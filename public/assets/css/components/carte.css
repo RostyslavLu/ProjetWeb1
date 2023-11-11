@@ -49,6 +49,12 @@
     text-align: end;
 }
 
+.carte-entete > p {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
 .carte-entete {
     padding: var(--space-lg);
     display: grid;

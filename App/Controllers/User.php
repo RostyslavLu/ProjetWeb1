@@ -41,8 +41,10 @@ class User extends \Core\Controller
             
             if ($value['coup_de_coer'] == 1) {
                 $tousEncheres[$key]['coup_de_coer'] = "Oui";
+                $tousEncheres[$key]['coup_cond'] = 1;
             } else {
                 $tousEncheres[$key]['coup_de_coer'] = "Non";
+                $tousEncheres[$key]['coup_cond'] = 0;
             }
             foreach ($produit as $key2 => $value2) {
                 $tousEncheres[$key]['nom'] = $value2['nom'];

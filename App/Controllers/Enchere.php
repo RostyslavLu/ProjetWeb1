@@ -69,7 +69,11 @@ class Enchere extends \Core\Controller
             $listeProduit[$key]['Produit_id'] = $value['id'];
             $listeProduit[$key]['date_debut'] = $enchere['date_debut'];
             $listeProduit[$key]['date_fin'] = $enchere['date_fin'];
+            $listeProduit[$key]['coup_de_coeur'] = $enchere['coup_de_coer'];
         }
+        // echo "<pre>";
+        // print_r($listeProduit);
+        // die();
 
         View::renderTemplate('Enchere/index.html',  [
             'encheres' => $listeProduit,
@@ -147,17 +151,35 @@ class Enchere extends \Core\Controller
      */
     public function coupDeCoeur()
     {
-
+        // echo "<pre>";
+        
         $enchereId = $this->route_params['id'];
+        $enchere = \App\Models\Enchere::selectId($enchereId);
         $userId = \App\Models\Enchere::selectId($enchereId)['Membre_id'];
         $data = [
             'Enchere_id' => $enchereId,
             'Membre_id' => $userId,
+            'coups_de_coeur' => $enchere['coup_de_coer']
         ];
-
+        // print_r($data);
+        // die();
         $liste = \App\Models\Enchere::insertCoupDeCoeur($data);
+        
 
-        header('Location: ../../enchere/index');
+        header('Location: ../../user/show/' . $_SESSION['user_id']);
+    }
+    public function deleteCoupDeCoeur()
+    {
+        $enchereId = $this->route_params['id'];
+        $enchere = \App\Models\Enchere::selectId($enchereId);
+        $userId = \App\Models\Enchere::selectId($enchereId)['Membre_id'];
+        $data = [
+            'Enchere_id' => $enchereId,
+            'Membre_id' => $userId,
+            'coups_de_coeur' => $enchere['coup_de_coer']
+        ];
+        $liste = \App\Models\Enchere::deleteCoupDeCoeur($data);
+        header('Location: ../../user/show/' . $_SESSION['user_id']);
     }
     /**
      * fonction pour afficher les enchères actuelles
@@ -213,6 +235,7 @@ class Enchere extends \Core\Controller
             $listeProduit[$key]['Produit_id'] = $value['id'];
             $listeProduit[$key]['date_debut'] = $enchere['date_debut'];
             $listeProduit[$key]['date_fin'] = $enchere['date_fin'];
+            $listeProduit[$key]['coup_de_coeur'] = $enchere['coup_de_coer'];
         }
 
         View::renderTemplate('Enchere/index.html',  [
@@ -231,7 +254,7 @@ class Enchere extends \Core\Controller
         $listeProduit = \App\Models\Produit::getAll();
 
         foreach ($listeProduit as $key => $value) {
-            //$produit = \App\Models\Produit::selectId($value['Produit_id']);
+            
 
             $enchere = \App\Models\Enchere::selectId($value['Enchere_id']);
             $offres = \App\Models\Offre::selectOffres($enchere['id']);
@@ -275,6 +298,7 @@ class Enchere extends \Core\Controller
             $listeProduit[$key]['Produit_id'] = $value['id'];
             $listeProduit[$key]['date_debut'] = $enchere['date_debut'];
             $listeProduit[$key]['date_fin'] = $enchere['date_fin'];
+            $listeProduit[$key]['coup_de_coeur'] = $enchere['coup_de_coer'];
         }
 
         View::renderTemplate('Enchere/index.html',  [

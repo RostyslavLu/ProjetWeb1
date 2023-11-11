@@ -105,4 +105,18 @@ class Enchere extends \Core\Model
         $stmt->bindValue(":id", $id);
         $stmt->execute();
     }
+    /**
+     * supprimer un coup de coeur dans la base de données
+     */
+    public static function deleteCoupDeCoeur($data) {
+        $db = static::getDB();
+        $Membre_id = $data['Membre_id'];
+        $id = $data['Enchere_id'];
+
+        $sql = "UPDATE Enchere SET coup_de_coer = 0 WHERE Membre_id = :Membre_id AND id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":Membre_id", $Membre_id);
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
+    }
 }
